@@ -24,7 +24,8 @@ test('client books (service → barber → slot → details) and the booking app
   await owner.getByRole('radio', { name: 'Woche' }).click();
   let found = false;
   for (let i = 0; i < 8 && !found; i++) {
-    found = await owner.getByText(name).first().isVisible().catch(() => false);
+    await expect(owner.getByText(/Termine?$/).first()).toBeVisible();
+    found = await owner.getByText(name).first().waitFor({ timeout: 2500 }).then(() => true, () => false);
     if (!found) {
       await owner.getByRole('button', { name: 'Weiter' }).click();
       await owner.waitForTimeout(400);

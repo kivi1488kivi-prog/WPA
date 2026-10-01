@@ -41,6 +41,9 @@ test('mobile: deep link → barber → date → time → details → confirm →
   await expect(p2.getByTestId('booking-status')).toHaveText('Storniert');
   await other.close();
 
-  await page.reload();
+  // the first device sees the cancellation too (fresh fetch, no stale cache)
+  await page.goto(link);
   await expect(page.getByTestId('booking-status')).toHaveText('Storniert');
+  await page.getByRole('link', { name: 'Meine Termine' }).click();
+  await expect(page.getByText('Vergangen & storniert')).toBeVisible();
 });
