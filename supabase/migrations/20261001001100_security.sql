@@ -141,6 +141,7 @@ grant execute on function
   public.ai_reserve(uuid, int, int, bigint, text),
   public.ai_commit_usage(uuid, date, int),
   public.pipeline_publish_tenant(jsonb, boolean, boolean),
+  public.pipeline_ensure_tenant(text, text, text, text, text, text, text, boolean),
   public.pipeline_tenant_state(text),
   public.pipeline_set_member(text, uuid, text, text),
   public.pipeline_seed_demo_bookings(text, jsonb)

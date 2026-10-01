@@ -11,9 +11,9 @@ import { TenantTheme } from './TenantTheme';
 import { ErrorState, FullscreenSpinner } from '@/components/States';
 import { NotFoundPage } from './StaticPages';
 
-function bootLocale(): 'en' | 'ru' {
-  const fromShell = document.documentElement.lang;
-  return fromShell.startsWith('ru') ? 'ru' : 'en';
+function bootLocale(): 'de' | 'en' | 'ru' {
+  const l = document.documentElement.lang || navigator.language;
+  return l.startsWith('ru') ? 'ru' : l.startsWith('en') ? 'en' : 'de';
 }
 
 export function TenantRoot() {

@@ -715,7 +715,8 @@ begin
                  'postal_code', 'country', 'map_url', 'instagram', 'website', 'accent_color', 'logo_path',
                  'cover_path', 'slot_step_min', 'min_lead_min', 'max_advance_days', 'allow_self_cancel',
                  'cancel_min_notice_min', 'allow_self_reschedule', 'reschedule_min_notice_min',
-                 'max_self_reschedules', 'reminder_offsets_min', 'notify_staff', 'ai_enabled') then
+                 'max_self_reschedules', 'reminder_offsets_min', 'notify_staff', 'ai_enabled',
+                 'legal', 'retention_months', 'locale') then
       perform private.fail('invalid_input', 'unknown_setting:' || k);
     end if;
   end loop;
@@ -754,6 +755,9 @@ begin
         else t.reminder_offsets_min end,
       notify_staff = coalesce((p_patch ->> 'notify_staff')::boolean, t.notify_staff),
       ai_enabled = coalesce((p_patch ->> 'ai_enabled')::boolean, t.ai_enabled),
+      legal = case when p_patch ? 'legal' then p_patch -> 'legal' else t.legal end,
+      retention_months = coalesce((p_patch ->> 'retention_months')::int, t.retention_months),
+      locale = coalesce(p_patch ->> 'locale', t.locale),
       owner_overrides = (select array_agg(distinct x) from unnest(t.owner_overrides || array['settings']) x)
     where t.id = p_tenant_id;
   exception when check_violation or not_null_violation or invalid_text_representation then
@@ -862,6 +866,11 @@ returns text[] language sql stable security definer set search_path = '' as $$
          then 'no_bookable_barber' end,
     case when coalesce(btrim(t.phone), '') = '' then 'missing_phone' end,
     case when coalesce(btrim(t.address_line), '') = '' then 'missing_address' end,
+    case when coalesce(btrim(t.legal #>> '{impressum,legal_name}'), '') = ''
+           or coalesce(btrim(t.legal #>> '{impressum,street}'), '') = ''
+           or coalesce(btrim(t.legal #>> '{impressum,city}'), '') = ''
+           or coalesce(btrim(t.legal #>> '{impressum,email}'), '') = ''
+         then 'missing_impressum' end,
     case when exists (select 1 from public.services s where s.tenant_id = p_tenant_id and s.is_active
                         and not exists (select 1 from public.barber_services bs join public.barbers b on b.id = bs.barber_id
                                         where bs.service_id = s.id and b.is_active))

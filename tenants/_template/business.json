@@ -1,0 +1,161 @@
+{
+  "$schema": "../_schema/business.schema.json",
+  "slug": "_template",
+  "name": "Mein Barbershop",
+  "short_name": "Barbershop",
+  "tagline": "Haarschnitte & Bartpflege",
+  "description": "Kurzbeschreibung des Barbershops.",
+  "locale": "de",
+  "timezone": "Europe/Berlin",
+  "currency": "EUR",
+  "is_demo": false,
+  "brand": {
+    "accent_color": "#C8A165",
+    "background_color": "#141416",
+    "logo": "images/logo.png",
+    "icon": "images/icon.png",
+    "maskable_icon": "images/icon-maskable.png",
+    "cover": "images/cover.jpg"
+  },
+  "contact": {
+    "phone": "+49 30 1234567",
+    "email": "kontakt@example.de"
+  },
+  "location": {
+    "address_line": "Musterstraße 1",
+    "city": "Berlin",
+    "postal_code": "10115",
+    "country": "Deutschland"
+  },
+  "legal": {
+    "impressum": {
+      "legal_name": "Max Mustermann",
+      "legal_form": "Einzelunternehmen",
+      "street": "Musterstraße 1",
+      "postal_code": "10115",
+      "city": "Berlin",
+      "country": "Deutschland",
+      "email": "kontakt@example.de",
+      "phone": "+49 30 1234567",
+      "profession": {
+        "title": "Friseur",
+        "awarded_in": "Deutschland",
+        "chamber": "Handwerkskammer …",
+        "rules": "Handwerksordnung (HwO)",
+        "rules_url": "https://www.gesetze-im-internet.de/hwo/"
+      },
+      "dispute_resolution": "not_willing"
+    },
+    "privacy": {
+      "supervisory_authority": "Landesdatenschutzbehörde …",
+      "retention_months": 36,
+      "hosting": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+      "extra_processors": []
+    }
+  },
+  "opening_hours": {
+    "mon": [
+      "10:00-19:00"
+    ],
+    "tue": [
+      "10:00-19:00"
+    ],
+    "wed": [
+      "10:00-19:00"
+    ],
+    "thu": [
+      "10:00-19:00"
+    ],
+    "fri": [
+      "10:00-19:00"
+    ],
+    "sat": [
+      "10:00-16:00"
+    ]
+  },
+  "rules": {
+    "slot_step_min": 15,
+    "min_lead_min": 60,
+    "max_advance_days": 60,
+    "cancellation": {
+      "allowed": true,
+      "min_notice_hours": 2
+    },
+    "reschedule": {
+      "allowed": true,
+      "min_notice_hours": 2,
+      "max_per_booking": 3
+    }
+  },
+  "notifications": {
+    "reminders_before_min": [
+      1440,
+      120
+    ],
+    "notify_staff": true
+  },
+  "ai": {
+    "enabled": true,
+    "daily_request_limit": 300,
+    "daily_token_limit": 300000
+  },
+  "services": [
+    {
+      "key": "haircut",
+      "name": "Herrenhaarschnitt",
+      "description": "Waschen, Schneiden, Styling",
+      "duration_min": 45,
+      "buffer_min": 5,
+      "price": 30
+    }
+  ],
+  "barbers": [
+    {
+      "key": "barber-1",
+      "name": "Vorname",
+      "title": "Barber",
+      "bio": "Kurzvorstellung.",
+      "photo": "images/barbers/barber-1.jpg",
+      "specialties": [
+        "Fades"
+      ],
+      "color": "#E07A5F",
+      "marker": "V1",
+      "services": [
+        "haircut"
+      ],
+      "schedule": {
+        "mon": [
+          "10:00-19:00"
+        ],
+        "tue": [
+          "10:00-19:00"
+        ],
+        "wed": [
+          "10:00-19:00"
+        ],
+        "thu": [
+          "10:00-19:00"
+        ],
+        "fri": [
+          "10:00-19:00"
+        ]
+      },
+      "breaks": {
+        "mon": [
+          "13:00-13:30"
+        ]
+      }
+    }
+  ],
+  "photos": [
+    {
+      "key": "interior-1",
+      "kind": "interior",
+      "file": "images/interior-1.jpg",
+      "alt": "Blick in den Salon"
+    }
+  ],
+  "special_dates": [],
+  "credits": []
+}

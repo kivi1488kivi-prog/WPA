@@ -84,6 +84,7 @@ create table public.customers (
   email text check (email is null or email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
   internal_note text not null default '' check (length(internal_note) <= 2000),
   is_demo boolean not null default false,
+  anonymized_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (tenant_id, id),
@@ -150,6 +151,8 @@ create trigger bookings_touch before update on public.bookings
 -- Historical facts must not change after the fact.
 create or replace function private.bookings_guard_snapshots()
 returns trigger language plpgsql as $$
+declare
+  v_anonymize boolean := current_setting('app.anonymize', true) = 'on';
 begin
   if new.tenant_id <> old.tenant_id
      or new.customer_id <> old.customer_id
@@ -164,9 +167,10 @@ begin
      or new.snap_tenant_name <> old.snap_tenant_name
      or new.snap_timezone <> old.snap_timezone
      or new.snap_policy <> old.snap_policy
-     or new.snap_customer_name <> old.snap_customer_name
-     or new.snap_customer_phone <> old.snap_customer_phone
-     or new.snap_customer_email is distinct from old.snap_customer_email
+     -- personal data may only change through the GDPR anonymization path
+     or (not v_anonymize and new.snap_customer_name <> old.snap_customer_name)
+     or (not v_anonymize and new.snap_customer_phone <> old.snap_customer_phone)
+     or (not v_anonymize and new.snap_customer_email is distinct from old.snap_customer_email)
      or new.token_hash is distinct from old.token_hash
      or new.idempotency_key is distinct from old.idempotency_key
      or (new.snap_barber_name <> old.snap_barber_name and new.barber_id = old.barber_id)

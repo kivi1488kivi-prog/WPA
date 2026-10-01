@@ -10,6 +10,7 @@ import { BookingPage } from '@/features/booking/BookingPage';
 import { MyBookingPage } from '@/features/my-booking/MyBookingPage';
 import { MyBookingsPage } from '@/features/my-booking/MyBookingsPage';
 import { FullscreenSpinner } from '@/components/States';
+import { ImpressumPage, PrivacyPage } from '@/features/legal/LegalPages';
 
 // Owner cabinet is a separate chunk: clients never download it.
 const OwnerApp = lazy(() => import('@/features/owner/OwnerApp'));
@@ -28,6 +29,9 @@ const router = createBrowserRouter([
           { path: 'book', element: <BookingPage /> },
           { path: 'booking', element: <MyBookingPage /> },
           { path: 'my', element: <MyBookingsPage /> },
+          { path: 'impressum', element: <ImpressumPage /> },
+          { path: 'datenschutz', element: <PrivacyPage /> },
+          { path: 'privacy', element: <PrivacyPage /> },
           {
             path: 'assistant',
             element: (

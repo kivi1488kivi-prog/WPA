@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router';
+import { Link, NavLink, Outlet } from 'react-router';
 import { Banner } from '@astryxdesign/core/Banner';
 import { VStack } from '@astryxdesign/core/VStack';
 import { CalendarCheck, CalendarPlus, House, MessageCircle } from 'lucide-react';
@@ -40,6 +40,12 @@ export function ClientLayout() {
         {shop.tenant.status === 'preview' && <Banner status="warning" title={t('app.preview')} container="section" />}
         {!online && <Banner status="info" title={t('app.offline')} container="section" />}
         <Outlet />
+        <footer className="mt-6 px-4 pb-4">
+          <nav aria-label={t('legal.footer')} className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-secondary">
+            <Link className="underline-offset-2 hover:underline" to={`${base}/impressum`}>{t('legal.impressum')}</Link>
+            <Link className="underline-offset-2 hover:underline" to={`${base}/datenschutz`}>{t('legal.privacy')}</Link>
+          </nav>
+        </footer>
       </VStack>
       <nav
         aria-label={t('nav.main')}

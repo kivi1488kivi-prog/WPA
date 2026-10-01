@@ -1,0 +1,490 @@
+{
+  "$schema": "../_schema/business.schema.json",
+  "slug": "demo-studio",
+  "name": "Demo Barber Studio",
+  "short_name": "Barber Studio",
+  "tagline": "Haarschnitte, Bärte und Nassrasur",
+  "description": "Ein fiktiver Demo-Barbershop zum Testen der Online-Terminbuchung. Alle Daten sind erfunden.",
+  "locale": "de",
+  "timezone": "Europe/Berlin",
+  "currency": "EUR",
+  "is_demo": true,
+  "brand": {
+    "accent_color": "#C8A165",
+    "background_color": "#141416",
+    "logo": "images/logo.png",
+    "icon": "images/icon.png",
+    "maskable_icon": "images/icon-maskable.png",
+    "cover": "images/cover.jpg"
+  },
+  "contact": {
+    "phone": "+49 30 0000 1234",
+    "email": "studio@example.com",
+    "instagram": "@demo.barber.studio",
+    "website": "https://example.com"
+  },
+  "location": {
+    "address_line": "Musterstraße 1",
+    "city": "Berlin",
+    "postal_code": "10115",
+    "country": "Deutschland",
+    "lat": 52.53,
+    "lng": 13.4
+  },
+  "opening_hours": {
+    "mon": [
+      "10:00-21:00"
+    ],
+    "tue": [
+      "10:00-21:00"
+    ],
+    "wed": [
+      "10:00-21:00"
+    ],
+    "thu": [
+      "10:00-21:00"
+    ],
+    "fri": [
+      "10:00-21:00"
+    ],
+    "sat": [
+      "10:00-19:00"
+    ],
+    "sun": [
+      "11:00-17:00"
+    ]
+  },
+  "rules": {
+    "slot_step_min": 15,
+    "min_lead_min": 60,
+    "max_advance_days": 45,
+    "cancellation": {
+      "allowed": true,
+      "min_notice_hours": 3
+    },
+    "reschedule": {
+      "allowed": true,
+      "min_notice_hours": 3,
+      "max_per_booking": 2
+    }
+  },
+  "notifications": {
+    "reminders_before_min": [
+      1440,
+      120
+    ],
+    "notify_staff": true
+  },
+  "ai": {
+    "enabled": true,
+    "daily_request_limit": 300,
+    "daily_token_limit": 300000
+  },
+  "services": [
+    {
+      "key": "classic-cut",
+      "name": "Herrenhaarschnitt",
+      "description": "Schere und Maschine, Waschen, Styling",
+      "duration_min": 45,
+      "buffer_min": 5,
+      "price": 35
+    },
+    {
+      "key": "fade",
+      "name": "Fade",
+      "description": "Übergang ab Haut, Konturen",
+      "duration_min": 50,
+      "buffer_min": 10,
+      "price": 40
+    },
+    {
+      "key": "beard",
+      "name": "Bartpflege",
+      "description": "Form, Kontur, heißes Handtuch",
+      "duration_min": 30,
+      "price": 20
+    },
+    {
+      "key": "cut-beard",
+      "name": "Haarschnitt + Bart",
+      "description": "Kombi zum Vorteilspreis",
+      "duration_min": 75,
+      "buffer_min": 10,
+      "price": 50
+    },
+    {
+      "key": "royal-shave",
+      "name": "Royal Shave",
+      "description": "Rasiermesser, Vorbereitung, Pflege. Online-Storno bis 24 Stunden vorher",
+      "duration_min": 40,
+      "price": 30,
+      "policy": {
+        "cancellation_min_notice_hours": 24
+      }
+    },
+    {
+      "key": "camo",
+      "name": "Grau-Kaschierung",
+      "description": "Tönung für Bart oder Haar",
+      "duration_min": 30,
+      "price": 25
+    },
+    {
+      "key": "kids-cut",
+      "name": "Kinderhaarschnitt",
+      "description": "Bis 12 Jahre",
+      "duration_min": 30,
+      "price": 22
+    },
+    {
+      "key": "styling",
+      "name": "Styling",
+      "description": "Waschen und Styling",
+      "duration_min": 20,
+      "price": 15
+    }
+  ],
+  "barbers": [
+    {
+      "key": "alexey",
+      "name": "Alexej",
+      "title": "Top-Barber",
+      "bio": "Seit 10 Jahren im Beruf. Klassiker und moderne Fades.",
+      "photo": "images/barbers/alexey.jpg",
+      "specialties": [
+        "Fades",
+        "Klassiker",
+        "Bart"
+      ],
+      "color": "#E07A5F",
+      "marker": "AL",
+      "services": [
+        "classic-cut",
+        "fade",
+        "beard",
+        "cut-beard"
+      ],
+      "schedule": {
+        "mon": [
+          "10:00-14:00",
+          "15:00-20:00"
+        ],
+        "tue": [
+          "10:00-14:00",
+          "15:00-20:00"
+        ],
+        "wed": [
+          "10:00-14:00",
+          "15:00-20:00"
+        ],
+        "thu": [
+          "10:00-14:00",
+          "15:00-20:00"
+        ],
+        "fri": [
+          "10:00-14:00",
+          "15:00-20:00"
+        ]
+      },
+      "breaks": {
+        "wed": [
+          "12:00-12:30"
+        ]
+      }
+    },
+    {
+      "key": "marco",
+      "name": "Marco",
+      "title": "Barber & Shaver",
+      "bio": "Meister des Rasiermessers und der Bartpflege.",
+      "photo": "images/barbers/marco.jpg",
+      "specialties": [
+        "Rasur",
+        "Bart",
+        "Kaschierung"
+      ],
+      "color": "#81B29A",
+      "marker": "MA",
+      "services": [
+        "classic-cut",
+        "beard",
+        "cut-beard",
+        "royal-shave",
+        "camo"
+      ],
+      "schedule": {
+        "tue": [
+          "12:00-21:00"
+        ],
+        "wed": [
+          "12:00-21:00"
+        ],
+        "thu": [
+          "12:00-21:00"
+        ],
+        "fri": [
+          "12:00-21:00"
+        ],
+        "sat": [
+          "10:00-19:00"
+        ]
+      },
+      "breaks": {
+        "tue": [
+          "16:00-16:30"
+        ],
+        "wed": [
+          "16:00-16:30"
+        ],
+        "thu": [
+          "16:00-16:30"
+        ],
+        "fri": [
+          "16:00-16:30"
+        ],
+        "sat": [
+          "14:00-14:30"
+        ]
+      }
+    },
+    {
+      "key": "irina",
+      "name": "Irina",
+      "title": "Stylistin",
+      "bio": "Kinderhaarschnitte und Stylings, arbeitet auch sonntags.",
+      "photo": "images/barbers/irina.jpg",
+      "specialties": [
+        "Kinder",
+        "Styling"
+      ],
+      "color": "#9C89B8",
+      "marker": "IR",
+      "services": [
+        "kids-cut",
+        "classic-cut",
+        "styling"
+      ],
+      "schedule": {
+        "mon": [
+          "10:00-18:00"
+        ],
+        "wed": [
+          "10:00-18:00"
+        ],
+        "fri": [
+          "10:00-18:00"
+        ],
+        "sun": [
+          "11:00-17:00"
+        ]
+      }
+    }
+  ],
+  "photos": [
+    {
+      "key": "interior-1",
+      "kind": "interior",
+      "file": "images/interior-1.jpg",
+      "alt": "Salon mit Vintage-Sesseln"
+    },
+    {
+      "key": "interior-2",
+      "kind": "interior",
+      "file": "images/interior-2.jpg",
+      "alt": "Werkzeuge des Barbers"
+    },
+    {
+      "key": "work-1",
+      "kind": "work",
+      "file": "images/work-1.jpg",
+      "alt": "Fade mit der Maschine"
+    },
+    {
+      "key": "work-2",
+      "kind": "work",
+      "file": "images/work-2.jpg",
+      "alt": "Bartpflege"
+    }
+  ],
+  "special_dates": [
+    {
+      "date": "2026-12-24",
+      "hours": [
+        "10:00-14:00"
+      ],
+      "note": "Heiligabend"
+    },
+    {
+      "date": "2026-12-31",
+      "hours": [
+        "10:00-15:00"
+      ],
+      "note": "Silvester"
+    },
+    {
+      "date": "2027-01-01",
+      "closed": true,
+      "note": "Neujahr"
+    }
+  ],
+  "demo": {
+    "bookings": [
+      {
+        "day_offset": -3,
+        "time": "11:00",
+        "service": "classic-cut",
+        "barber": "alexey",
+        "customer": {
+          "name": "Demo Jonas",
+          "phone": "+49 151 0000 0001"
+        },
+        "status": "completed"
+      },
+      {
+        "day_offset": -2,
+        "time": "13:00",
+        "service": "royal-shave",
+        "barber": "marco",
+        "customer": {
+          "name": "Demo Lukas",
+          "phone": "+49 151 0000 0002"
+        },
+        "status": "completed"
+      },
+      {
+        "day_offset": -1,
+        "time": "16:00",
+        "service": "kids-cut",
+        "barber": "irina",
+        "customer": {
+          "name": "Demo Lea",
+          "phone": "+49 151 0000 0003"
+        },
+        "status": "cancelled"
+      },
+      {
+        "day_offset": 1,
+        "time": "11:00",
+        "service": "fade",
+        "barber": "alexey",
+        "customer": {
+          "name": "Demo Felix",
+          "phone": "+49 151 0000 0004"
+        }
+      },
+      {
+        "day_offset": 1,
+        "time": "17:00",
+        "service": "cut-beard",
+        "barber": "marco",
+        "customer": {
+          "name": "Demo Paul",
+          "phone": "+49 151 0000 0005"
+        }
+      },
+      {
+        "day_offset": 2,
+        "time": "12:00",
+        "service": "beard",
+        "barber": null,
+        "customer": {
+          "name": "Demo Elias",
+          "phone": "+49 151 0000 0006"
+        }
+      },
+      {
+        "day_offset": 3,
+        "time": "15:00",
+        "service": "classic-cut",
+        "barber": null,
+        "customer": {
+          "name": "Demo Noah",
+          "phone": "+49 151 0000 0007"
+        }
+      }
+    ]
+  },
+  "credits": [
+    {
+      "file": "images/interior-1.jpg",
+      "author": "wal_ 172619",
+      "source": "https://www.pexels.com/photo/vintage-barber-shop-interior-with-classic-chairs-37764947/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/interior-2.jpg",
+      "author": "Godwin Torres",
+      "source": "https://www.pexels.com/photo/tray-with-hairdresser-tools-18186517/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/work-1.jpg",
+      "author": "Rahib Hamidov",
+      "source": "https://www.pexels.com/photo/a-person-using-clippers-18503633/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/work-2.jpg",
+      "author": "Лена Gromakova",
+      "source": "https://www.pexels.com/photo/a-man-getting-a-moustache-grooming-9153970/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/cover.jpg",
+      "author": "Max Vakhtbovych",
+      "source": "https://www.pexels.com/photo/backwash-chairs-in-modern-beauty-salon-7195805/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/alexey.jpg",
+      "author": "Ben Khatry",
+      "source": "https://www.pexels.com/photo/barber-holding-scissors-20302331/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/marco.jpg",
+      "author": "alexandre saraiva carniato",
+      "source": "https://www.pexels.com/photo/smiling-man-with-scissors-on-hand-5188606/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/irina.jpg",
+      "author": "cottonbro studio",
+      "source": "https://www.pexels.com/photo/smiling-woman-in-brown-cardigan-and-blue-denim-dungaree-3993303/",
+      "license": "Pexels License"
+    }
+  ],
+  "legal": {
+    "impressum": {
+      "legal_name": "Demo Barber Studio Inh. Max Mustermann (fiktiv)",
+      "legal_form": "Einzelunternehmen",
+      "represented_by": "Max Mustermann",
+      "street": "Musterstraße 1",
+      "postal_code": "10115",
+      "city": "Berlin",
+      "country": "Deutschland",
+      "email": "studio@example.com",
+      "phone": "+49 30 0000 1234",
+      "vat_id": "DE000000000",
+      "profession": {
+        "title": "Friseur (Meister)",
+        "awarded_in": "Deutschland",
+        "chamber": "Handwerkskammer Berlin (Beispiel)",
+        "rules": "Handwerksordnung (HwO)",
+        "rules_url": "https://www.gesetze-im-internet.de/hwo/"
+      },
+      "content_responsible": {
+        "name": "Max Mustermann",
+        "address": "Musterstraße 1, 10115 Berlin"
+      },
+      "dispute_resolution": "not_willing"
+    },
+    "privacy": {
+      "supervisory_authority": "Berliner Beauftragte für Datenschutz und Informationsfreiheit",
+      "retention_months": 36,
+      "hosting": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+      "ai_provider": "Konfigurierter KI-Anbieter (siehe Auftragsverarbeitung)",
+      "extra_processors": []
+    }
+  }
+}

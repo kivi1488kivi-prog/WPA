@@ -29,7 +29,7 @@ begin
   if v_t.id is null then
     insert into public.tenants (slug, name, short_name, timezone, currency, accent_color, locale, is_demo, status)
     values (v_slug, p_config ->> 'name', p_config ->> 'short_name', p_config ->> 'timezone',
-            p_config ->> 'currency', p_config ->> 'accent_color', coalesce(p_config ->> 'locale', 'en'),
+            p_config ->> 'currency', p_config ->> 'accent_color', coalesce(p_config ->> 'locale', 'de'),
             coalesce((p_config ->> 'is_demo')::boolean, false), 'preview')
     returning * into v_t;
     v_created := true;
@@ -84,7 +84,9 @@ begin
       notify_staff = coalesce((p_config #>> '{notifications,notify_staff}')::boolean, notify_staff),
       ai_enabled = coalesce((p_config #>> '{ai,enabled}')::boolean, ai_enabled),
       ai_daily_request_limit = coalesce((p_config #>> '{ai,daily_request_limit}')::int, ai_daily_request_limit),
-      ai_daily_token_limit = coalesce((p_config #>> '{ai,daily_token_limit}')::int, ai_daily_token_limit)
+      ai_daily_token_limit = coalesce((p_config #>> '{ai,daily_token_limit}')::int, ai_daily_token_limit),
+      legal = coalesce(p_config -> 'legal', legal),
+      retention_months = coalesce((p_config #>> '{legal,privacy,retention_months}')::int, retention_months)
     where id = v_t.id;
   end if;
 
@@ -340,4 +342,21 @@ begin
     v_n := v_n + 1;
   end loop;
   return v_n;
+end $$;
+
+-- Create the tenant row if missing (first publish needs the id for storage paths).
+create or replace function public.pipeline_ensure_tenant(
+  p_slug text, p_name text, p_short_name text, p_timezone text, p_currency text,
+  p_accent text, p_locale text, p_is_demo boolean)
+returns uuid language plpgsql security definer set search_path = '' as $$
+declare v_id uuid;
+begin
+  perform private.require_service_role();
+  select id into v_id from public.tenants where slug = p_slug;
+  if v_id is null then
+    insert into public.tenants (slug, name, short_name, timezone, currency, accent_color, locale, is_demo, status)
+    values (p_slug, p_name, p_short_name, p_timezone, p_currency, p_accent, p_locale, p_is_demo, 'preview')
+    returning id into v_id;
+  end if;
+  return v_id;
 end $$;

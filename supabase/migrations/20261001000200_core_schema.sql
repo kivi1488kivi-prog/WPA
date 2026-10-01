@@ -13,7 +13,7 @@ create table public.tenants (
   tagline text check (length(tagline) <= 140),
   description text check (length(description) <= 2000),
   timezone text not null check (private.is_valid_timezone(timezone)),
-  locale text not null default 'en' check (locale in ('en', 'ru')),
+  locale text not null default 'de' check (locale in ('de', 'en', 'ru')),
   currency text not null check (currency ~ '^[A-Z]{3}$'),
   accent_color text not null check (accent_color ~ '^#[0-9a-fA-F]{6}$'),
   phone text,
@@ -27,6 +27,9 @@ create table public.tenants (
   map_url text,
   instagram text,
   website text,
+  -- Legal (Impressum § 5 DDG, privacy notice data, retention). Public data.
+  legal jsonb not null default '{}'::jsonb check (jsonb_typeof(legal) = 'object'),
+  retention_months int not null default 36 check (retention_months between 6 and 120),
   logo_path text,
   cover_path text,
   -- booking rules

@@ -5,6 +5,6 @@ export const MEDIA_BUCKET = 'tenant-media';
 /** Public URL of a tenant media object (bucket is public-read). */
 export function mediaUrl(path: string | null | undefined): string | null {
   if (!path) return null;
-  if (/^https?:\/\//.test(path)) return path;
+  if (/^https?:\/\//.test(path) || path.startsWith('/')) return path; // absolute URL or same-origin static media
   return `${env.supabaseUrl}/storage/v1/object/public/${MEDIA_BUCKET}/${path.split('/').map(encodeURIComponent).join('/')}`;
 }

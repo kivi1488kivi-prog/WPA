@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Avatar } from '@astryxdesign/core/Avatar';
 import { Banner } from '@astryxdesign/core/Banner';
@@ -323,6 +323,10 @@ export function BookingPage() {
                 {rules.allow_self_cancel
                   ? t('book.policy.cancel', { hours: fmtHoursFromMinutes(rules.cancel_min_notice_min, intl) })
                   : t('book.policy.noCancel')}
+              </Text>
+              <Text type="supporting">
+                {t('book.privacyNote')}{' '}
+                <Link className="text-accent underline" to={`/s/${slug}/datenschutz`}>{t('book.privacyLink')}</Link>
               </Text>
               {rules.allow_self_reschedule ? (
                 <Text type="supporting">{t('book.policy.reschedule', { hours: fmtHoursFromMinutes(rules.reschedule_min_notice_min, intl) })}</Text>

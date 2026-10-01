@@ -5,7 +5,7 @@ export interface TenantCtx {
   slug: string;
   shop: ShopPayload;
   tz: string;
-  locale: 'en' | 'ru';
+  locale: 'de' | 'en' | 'ru';
   /** BCP-47 locale for Intl formatting. */
   intl: string;
   refetch: () => void;
@@ -19,6 +19,6 @@ export function useTenant(): TenantCtx {
   return v;
 }
 
-export function intlLocale(locale: 'en' | 'ru'): string {
-  return locale === 'ru' ? 'ru-RU' : 'en-GB';
+export function intlLocale(locale: 'de' | 'en' | 'ru'): string {
+  return locale === 'ru' ? 'ru-RU' : locale === 'de' ? 'de-DE' : 'en-US';
 }

@@ -1,0 +1,1045 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "short_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24
+    },
+    "tagline": {
+      "type": "string",
+      "maxLength": 140
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "locale": {
+      "type": "string",
+      "enum": [
+        "de",
+        "en",
+        "ru"
+      ]
+    },
+    "timezone": {
+      "type": "string",
+      "minLength": 3
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "is_demo": {
+      "default": false,
+      "type": "boolean"
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+        "accent_color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "background_color": {
+          "default": "#0E0E10",
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "logo": {
+          "type": "string",
+          "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+        },
+        "icon": {
+          "type": "string",
+          "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+        },
+        "maskable_icon": {
+          "type": "string",
+          "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+        },
+        "cover": {
+          "type": "string",
+          "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+        }
+      },
+      "required": [
+        "accent_color",
+        "icon",
+        "cover"
+      ],
+      "additionalProperties": false
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "instagram": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "phone"
+      ],
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "address_line": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "postal_code": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "lng": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "map_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "address_line",
+        "city"
+      ],
+      "additionalProperties": false
+    },
+    "legal": {
+      "type": "object",
+      "properties": {
+        "impressum": {
+          "type": "object",
+          "properties": {
+            "legal_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 160
+            },
+            "legal_form": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "represented_by": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "street": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 160
+            },
+            "postal_code": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 20
+            },
+            "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "country": {
+              "default": "Deutschland",
+              "type": "string",
+              "maxLength": 60
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "register": {
+              "type": "object",
+              "properties": {
+                "court": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                },
+                "number": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                }
+              },
+              "required": [
+                "court",
+                "number"
+              ],
+              "additionalProperties": false
+            },
+            "vat_id": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}[A-Z0-9]{2,12}$"
+            },
+            "tax_number": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "profession": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "awarded_in": {
+                  "default": "Deutschland",
+                  "type": "string",
+                  "maxLength": 60
+                },
+                "chamber": {
+                  "type": "string",
+                  "maxLength": 160
+                },
+                "rules": {
+                  "default": "Handwerksordnung (HwO)",
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "rules_url": {
+                  "default": "https://www.gesetze-im-internet.de/hwo/",
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "chamber"
+              ],
+              "additionalProperties": false
+            },
+            "content_responsible": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 120
+                },
+                "address": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "name",
+                "address"
+              ],
+              "additionalProperties": false
+            },
+            "dispute_resolution": {
+              "default": "not_willing",
+              "type": "string",
+              "enum": [
+                "not_willing",
+                "willing",
+                "obliged"
+              ]
+            }
+          },
+          "required": [
+            "legal_name",
+            "street",
+            "postal_code",
+            "city",
+            "email"
+          ],
+          "additionalProperties": false
+        },
+        "privacy": {
+          "default": {
+            "retention_months": 36,
+            "hosting": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+            "extra_processors": []
+          },
+          "type": "object",
+          "properties": {
+            "dpo": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 120
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                }
+              },
+              "required": [
+                "name",
+                "email"
+              ],
+              "additionalProperties": false
+            },
+            "supervisory_authority": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "retention_months": {
+              "default": 36,
+              "type": "integer",
+              "minimum": 6,
+              "maximum": 120
+            },
+            "hosting": {
+              "default": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+              "type": "string",
+              "maxLength": 200
+            },
+            "ai_provider": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "extra_processors": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "location": {
+                    "type": "string",
+                    "maxLength": 120
+                  }
+                },
+                "required": [
+                  "name",
+                  "purpose",
+                  "location"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "impressum"
+      ],
+      "additionalProperties": false
+    },
+    "opening_hours": {
+      "type": "object",
+      "properties": {
+        "mon": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "tue": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "wed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "thu": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "fri": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "sat": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        },
+        "sun": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "slot_step_min": {
+          "default": 15,
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 5
+            },
+            {
+              "type": "number",
+              "const": 10
+            },
+            {
+              "type": "number",
+              "const": 15
+            },
+            {
+              "type": "number",
+              "const": 20
+            },
+            {
+              "type": "number",
+              "const": 30
+            },
+            {
+              "type": "number",
+              "const": 60
+            }
+          ]
+        },
+        "min_lead_min": {
+          "default": 60,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10080
+        },
+        "max_advance_days": {
+          "default": 60,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 365
+        },
+        "cancellation": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "min_notice_hours": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 336
+            }
+          },
+          "required": [
+            "allowed",
+            "min_notice_hours"
+          ],
+          "additionalProperties": false
+        },
+        "reschedule": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "min_notice_hours": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 336
+            },
+            "max_per_booking": {
+              "default": 3,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "allowed",
+            "min_notice_hours"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "cancellation",
+        "reschedule"
+      ],
+      "additionalProperties": false
+    },
+    "notifications": {
+      "default": {
+        "reminders_before_min": [
+          1440,
+          120
+        ],
+        "notify_staff": true
+      },
+      "type": "object",
+      "properties": {
+        "reminders_before_min": {
+          "default": [
+            1440,
+            120
+          ],
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 10080
+          }
+        },
+        "notify_staff": {
+          "default": true,
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ai": {
+      "default": {
+        "enabled": true,
+        "daily_request_limit": 300,
+        "daily_token_limit": 300000
+      },
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "type": "boolean"
+        },
+        "daily_request_limit": {
+          "default": 300,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "daily_token_limit": {
+          "default": 300000,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        }
+      },
+      "additionalProperties": false
+    },
+    "services": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "duration_min": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 480
+          },
+          "buffer_min": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 120
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "active": {
+            "default": true,
+            "type": "boolean"
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "cancellation_allowed": {
+                "type": "boolean"
+              },
+              "cancellation_min_notice_hours": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 336
+              },
+              "reschedule_allowed": {
+                "type": "boolean"
+              },
+              "reschedule_min_notice_hours": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 336
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "duration_min",
+          "price"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "barbers": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "bio": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "photo": {
+            "type": "string",
+            "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+          },
+          "specialties": {
+            "default": [],
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            }
+          },
+          "color": {
+            "default": "#9CA3AF",
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "marker": {
+            "default": "",
+            "type": "string",
+            "maxLength": 3
+          },
+          "active": {
+            "default": true,
+            "type": "boolean"
+          },
+          "services": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+            }
+          },
+          "schedule": {
+            "type": "object",
+            "properties": {
+              "mon": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "tue": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "wed": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "thu": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "fri": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "sat": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "sun": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "breaks": {
+            "default": {},
+            "type": "object",
+            "properties": {
+              "mon": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "tue": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "wed": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "thu": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "fri": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "sat": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              },
+              "sun": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "services",
+          "schedule"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "photos": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "interior",
+              "work"
+            ]
+          },
+          "file": {
+            "type": "string",
+            "pattern": "^images\\/[\\w./-]+\\.(jpe?g|png|webp)$"
+          },
+          "alt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "key",
+          "kind",
+          "file",
+          "alt"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "special_dates": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "barber": {
+            "default": null,
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "closed": {
+            "default": false,
+            "type": "boolean"
+          },
+          "hours": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d-(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+            }
+          },
+          "note": {
+            "default": "",
+            "type": "string",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "date"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "demo": {
+      "type": "object",
+      "properties": {
+        "bookings": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day_offset": {
+                "type": "integer",
+                "minimum": -30,
+                "maximum": 30
+              },
+              "time": {
+                "type": "string",
+                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+              },
+              "service": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+              },
+              "barber": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "customer": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                  }
+                },
+                "required": [
+                  "name",
+                  "phone"
+                ],
+                "additionalProperties": false
+              },
+              "status": {
+                "default": "confirmed",
+                "type": "string",
+                "enum": [
+                  "confirmed",
+                  "completed",
+                  "cancelled"
+                ]
+              }
+            },
+            "required": [
+              "day_offset",
+              "time",
+              "service",
+              "barber",
+              "customer"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "format": "uri"
+          },
+          "license": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "file",
+          "author",
+          "source",
+          "license"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "slug",
+    "name",
+    "short_name",
+    "locale",
+    "timezone",
+    "currency",
+    "brand",
+    "contact",
+    "location",
+    "legal",
+    "opening_hours",
+    "rules",
+    "services",
+    "barbers"
+  ],
+  "additionalProperties": false
+}

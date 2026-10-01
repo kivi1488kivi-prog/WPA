@@ -4,8 +4,9 @@ import { Scissors } from 'lucide-react';
 import { makeT } from '@/lib/i18n';
 import { TenantTheme } from './TenantTheme';
 
-function locale(): 'en' | 'ru' {
-  return (document.documentElement.lang || navigator.language).startsWith('ru') ? 'ru' : 'en';
+function locale(): 'de' | 'en' | 'ru' {
+  const l = document.documentElement.lang || navigator.language;
+  return l.startsWith('ru') ? 'ru' : l.startsWith('en') ? 'en' : 'de';
 }
 
 /** "/" — the shared build has no default tenant; each shop lives at /s/{slug}/. */

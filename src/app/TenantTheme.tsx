@@ -18,7 +18,7 @@ export function TenantTheme({ slug, accent, children }: { slug: string; accent: 
       defineTheme({
         name: `tenant-${slug}`,
         extends: neutralTheme,
-        color: { accent: HEX.test(accent) ? [accent, accent] : ['#C8A165', '#C8A165'], neutralStyle: 'warm' },
+        color: { accent: HEX.test(accent) ? [accent, accent] : ['#C8A165', '#C8A165'], neutralStyle: 'neutral' },
         radius: { base: 6, multiplier: 1.25 },
       }),
     [slug, accent],

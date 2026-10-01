@@ -15,6 +15,35 @@ export const RulesSchema = z.object({
   reschedule_min_notice_min: z.number(),
 });
 
+const opt = z.string().optional();
+export const LegalSchema = z
+  .object({
+    impressum: z
+      .object({
+        legal_name: opt, legal_form: opt, represented_by: opt, street: opt, postal_code: opt, city: opt, country: opt,
+        email: opt, phone: opt, vat_id: opt, tax_number: opt,
+        register: z.object({ court: z.string(), number: z.string() }).optional(),
+        profession: z.object({ title: z.string(), awarded_in: opt, chamber: z.string(), rules: opt, rules_url: opt }).optional(),
+        content_responsible: z.object({ name: z.string(), address: z.string() }).optional(),
+        dispute_resolution: z.enum(['not_willing', 'willing', 'obliged']).optional(),
+      })
+      .partial()
+      .optional(),
+    privacy: z
+      .object({
+        dpo: z.object({ name: z.string(), email: z.string() }).optional(),
+        supervisory_authority: opt,
+        retention_months: z.number().optional(),
+        hosting: opt,
+        ai_provider: opt,
+        extra_processors: z.array(z.object({ name: z.string(), purpose: z.string(), location: z.string() })).optional(),
+      })
+      .partial()
+      .optional(),
+  })
+  .passthrough();
+export type Legal = z.infer<typeof LegalSchema>;
+
 export const PublicTenantSchema = z.object({
   id: z.string().uuid(),
   slug: z.string(),
@@ -25,7 +54,7 @@ export const PublicTenantSchema = z.object({
   tagline: nullableStr,
   description: nullableStr,
   timezone: z.string(),
-  locale: z.enum(['en', 'ru']),
+  locale: z.enum(['de', 'en', 'ru']),
   currency: z.string(),
   accent_color: z.string(),
   phone: nullableStr,
@@ -42,6 +71,8 @@ export const PublicTenantSchema = z.object({
   logo_path: nullableStr,
   cover_path: nullableStr,
   ai_enabled: z.boolean(),
+  legal: LegalSchema,
+  retention_months: z.number(),
   rules: RulesSchema,
 });
 

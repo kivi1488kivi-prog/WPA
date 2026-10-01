@@ -1,9 +1,10 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import { en, type MessageKey, type Dict } from './en';
 import { ru } from './ru';
+import { de } from './de';
 
-export type Locale = 'en' | 'ru';
-const dicts: Record<Locale, Dict> = { en, ru };
+export type Locale = 'de' | 'en' | 'ru';
+const dicts: Record<Locale, Dict> = { de, en, ru };
 
 export type TFn = (key: MessageKey, vars?: Record<string, string | number>) => string;
 

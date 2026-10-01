@@ -43,6 +43,8 @@ begin
       'instagram', v_t.instagram, 'website', v_t.website,
       'logo_path', v_t.logo_path, 'cover_path', v_t.cover_path,
       'ai_enabled', v_t.ai_enabled,
+      'legal', v_t.legal,
+      'retention_months', v_t.retention_months,
       'rules', jsonb_build_object(
         'slot_step_min', v_t.slot_step_min, 'min_lead_min', v_t.min_lead_min,
         'max_advance_days', v_t.max_advance_days,

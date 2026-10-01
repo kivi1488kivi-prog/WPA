@@ -1,0 +1,392 @@
+{
+  "$schema": "../_schema/business.schema.json",
+  "slug": "demo-harbor",
+  "name": "Harbor Cuts (Demo)",
+  "short_name": "Harbor Cuts",
+  "tagline": "Waterfront barbershop · walk-ins welcome",
+  "description": "A fictional demo shop used to verify tenant isolation and re-skinning. All data is made up.",
+  "locale": "en",
+  "timezone": "America/New_York",
+  "currency": "USD",
+  "is_demo": true,
+  "brand": {
+    "accent_color": "#2BB3A3",
+    "background_color": "#0F1A1C",
+    "logo": "images/logo.png",
+    "icon": "images/icon.png",
+    "maskable_icon": "images/icon-maskable.png",
+    "cover": "images/cover.jpg"
+  },
+  "contact": {
+    "phone": "+1 212 555 0100",
+    "email": "harbor@example.com"
+  },
+  "location": {
+    "address_line": "1 Demo Pier",
+    "city": "New York",
+    "postal_code": "10004",
+    "country": "US"
+  },
+  "opening_hours": {
+    "mon": [
+      "09:00-19:00"
+    ],
+    "tue": [
+      "09:00-19:00"
+    ],
+    "wed": [
+      "09:00-19:00"
+    ],
+    "thu": [
+      "09:00-19:00"
+    ],
+    "fri": [
+      "09:00-19:00"
+    ],
+    "sat": [
+      "09:00-19:00"
+    ],
+    "sun": [
+      "10:00-16:00"
+    ]
+  },
+  "rules": {
+    "slot_step_min": 30,
+    "min_lead_min": 120,
+    "max_advance_days": 30,
+    "cancellation": {
+      "allowed": true,
+      "min_notice_hours": 12
+    },
+    "reschedule": {
+      "allowed": false,
+      "min_notice_hours": 12,
+      "max_per_booking": 0
+    }
+  },
+  "notifications": {
+    "reminders_before_min": [
+      180
+    ],
+    "notify_staff": true
+  },
+  "ai": {
+    "enabled": true,
+    "daily_request_limit": 200,
+    "daily_token_limit": 200000
+  },
+  "services": [
+    {
+      "key": "haircut",
+      "name": "Haircut",
+      "description": "Scissor or clipper cut, wash and style",
+      "duration_min": 30,
+      "price": 35
+    },
+    {
+      "key": "skin-fade",
+      "name": "Skin fade",
+      "description": "Bald fade with line-up",
+      "duration_min": 60,
+      "price": 45
+    },
+    {
+      "key": "beard-trim",
+      "name": "Beard trim",
+      "description": "Shape and line-up",
+      "duration_min": 30,
+      "price": 20
+    },
+    {
+      "key": "hot-towel-shave",
+      "name": "Hot towel shave",
+      "description": "Straight razor, hot towels, aftercare",
+      "duration_min": 30,
+      "price": 30,
+      "policy": {
+        "cancellation_allowed": false
+      }
+    },
+    {
+      "key": "kids",
+      "name": "Kids cut",
+      "description": "Under 12",
+      "duration_min": 30,
+      "price": 25
+    }
+  ],
+  "barbers": [
+    {
+      "key": "dave",
+      "name": "Dave",
+      "title": "Owner & barber",
+      "bio": "Fades and classic cuts since 2009.",
+      "photo": "images/barbers/dave.jpg",
+      "specialties": [
+        "Fades",
+        "Classic"
+      ],
+      "color": "#F2CC8F",
+      "marker": "DV",
+      "services": [
+        "haircut",
+        "skin-fade",
+        "beard-trim"
+      ],
+      "schedule": {
+        "mon": [
+          "09:00-17:00"
+        ],
+        "tue": [
+          "09:00-17:00"
+        ],
+        "wed": [
+          "09:00-17:00"
+        ],
+        "thu": [
+          "09:00-17:00"
+        ],
+        "fri": [
+          "09:00-17:00"
+        ]
+      },
+      "breaks": {
+        "mon": [
+          "12:00-12:30"
+        ],
+        "tue": [
+          "12:00-12:30"
+        ],
+        "wed": [
+          "12:00-12:30"
+        ],
+        "thu": [
+          "12:00-12:30"
+        ],
+        "fri": [
+          "12:00-12:30"
+        ]
+      }
+    },
+    {
+      "key": "luis",
+      "name": "Luis",
+      "title": "Barber",
+      "bio": "Hot towel shaves and beard work.",
+      "photo": "images/barbers/luis.jpg",
+      "specialties": [
+        "Shaves",
+        "Beards"
+      ],
+      "color": "#3D85C6",
+      "marker": "LU",
+      "services": [
+        "haircut",
+        "hot-towel-shave",
+        "beard-trim"
+      ],
+      "schedule": {
+        "wed": [
+          "10:00-19:00"
+        ],
+        "thu": [
+          "10:00-19:00"
+        ],
+        "fri": [
+          "10:00-19:00"
+        ],
+        "sat": [
+          "10:00-19:00"
+        ],
+        "sun": [
+          "10:00-16:00"
+        ]
+      },
+      "breaks": {
+        "wed": [
+          "13:00-13:30"
+        ],
+        "thu": [
+          "13:00-13:30"
+        ],
+        "fri": [
+          "13:00-13:30"
+        ],
+        "sat": [
+          "13:00-13:30"
+        ]
+      }
+    },
+    {
+      "key": "sam",
+      "name": "Sam",
+      "title": "Barber",
+      "bio": "Kids cuts and sharp line-ups.",
+      "photo": "images/barbers/sam.jpg",
+      "specialties": [
+        "Kids",
+        "Line-ups"
+      ],
+      "color": "#E06C9F",
+      "marker": "SM",
+      "services": [
+        "haircut",
+        "kids"
+      ],
+      "schedule": {
+        "mon": [
+          "09:00-13:00",
+          "14:00-19:00"
+        ],
+        "tue": [
+          "09:00-13:00",
+          "14:00-19:00"
+        ],
+        "thu": [
+          "09:00-13:00",
+          "14:00-19:00"
+        ],
+        "sat": [
+          "09:00-13:00",
+          "14:00-19:00"
+        ]
+      }
+    }
+  ],
+  "photos": [
+    {
+      "key": "interior-1",
+      "kind": "interior",
+      "file": "images/interior-1.jpg",
+      "alt": "Barber showing a client the finished cut"
+    },
+    {
+      "key": "interior-2",
+      "kind": "interior",
+      "file": "images/interior-2.jpg",
+      "alt": "Barber pole outside the shop"
+    },
+    {
+      "key": "work-1",
+      "kind": "work",
+      "file": "images/work-1.jpg",
+      "alt": "Scissors and combs"
+    },
+    {
+      "key": "work-2",
+      "kind": "work",
+      "file": "images/work-2.jpg",
+      "alt": "Beard trim"
+    }
+  ],
+  "special_dates": [
+    {
+      "date": "2026-11-26",
+      "closed": true,
+      "note": "Thanksgiving"
+    }
+  ],
+  "demo": {
+    "bookings": [
+      {
+        "day_offset": -1,
+        "time": "10:00",
+        "service": "haircut",
+        "barber": "sam",
+        "customer": {
+          "name": "Demo Bob",
+          "phone": "+1 212 555 0101"
+        },
+        "status": "completed"
+      },
+      {
+        "day_offset": 1,
+        "time": "11:00",
+        "service": "skin-fade",
+        "barber": "dave",
+        "customer": {
+          "name": "Demo Jim",
+          "phone": "+1 212 555 0102"
+        }
+      },
+      {
+        "day_offset": 2,
+        "time": "15:00",
+        "service": "hot-towel-shave",
+        "barber": "luis",
+        "customer": {
+          "name": "Demo Tom",
+          "phone": "+1 212 555 0103"
+        }
+      }
+    ]
+  },
+  "credits": [
+    {
+      "file": "images/cover.jpg",
+      "author": "Лена Gromakova",
+      "source": "https://www.pexels.com/photo/interior-of-hairdresser-saloon-9146943/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/interior-1.jpg",
+      "author": "Jose Ricardo Barraza Morachis",
+      "source": "https://www.pexels.com/photo/man-holding-mirror-behind-man-897273/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/interior-2.jpg",
+      "author": "Jonathan Cooper",
+      "source": "https://www.pexels.com/photo/close-up-view-of-barber-pole-9889983/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/work-1.jpg",
+      "author": "Nataliya Vaitkevich",
+      "source": "https://www.pexels.com/photo/black-handled-scissors-beside-stainless-steel-scissors-8468129/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/work-2.jpg",
+      "author": "alexandre saraiva carniato",
+      "source": "https://www.pexels.com/photo/a-person-shaving-a-man-s-beard-6007400/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/luis.jpg",
+      "author": "Nataliya Vaitkevich",
+      "source": "https://www.pexels.com/photo/a-man-holding-a-hair-iron-8468140/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/dave.jpg",
+      "author": "Nataliya Vaitkevich",
+      "source": "https://www.pexels.com/photo/a-man-in-black-apron-smiling-while-holding-a-plastic-bowl-8468132/",
+      "license": "Pexels License"
+    },
+    {
+      "file": "images/barbers/sam.jpg",
+      "author": "cottonbro studio",
+      "source": "https://www.pexels.com/photo/woman-in-black-crew-neck-shirt-smiling-3993465/",
+      "license": "Pexels License"
+    }
+  ],
+  "legal": {
+    "impressum": {
+      "legal_name": "Harbor Cuts Demo LLC (fictional)",
+      "represented_by": "Dave Example",
+      "street": "1 Demo Pier",
+      "postal_code": "10004",
+      "city": "New York",
+      "country": "USA",
+      "email": "harbor@example.com",
+      "phone": "+1 212 555 0100",
+      "dispute_resolution": "not_willing"
+    },
+    "privacy": {
+      "retention_months": 24,
+      "hosting": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+      "extra_processors": []
+    }
+  }
+}

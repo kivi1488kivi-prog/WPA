@@ -17,7 +17,17 @@
     "typecheck": "tsc -p tsconfig.app.json && tsc -p tsconfig.node.json",
     "test": "vitest run",
     "db:reset": "scripts/db/reset-local.sh",
-    "db:test": "scripts/db/test-sql.sh"
+    "db:test": "scripts/db/test-sql.sh",
+    "tenant:new": "tsx scripts/tenant/new.ts",
+    "tenant:validate": "tsx scripts/tenant/validate.ts",
+    "tenant:publish": "tsx scripts/tenant/publish.ts",
+    "tenant:verify": "tsx scripts/tenant/verify.ts",
+    "tenant:member": "tsx scripts/tenant/member.ts",
+    "seed:build": "tsx scripts/tenant/build-seed.ts",
+    "local:up": "tools/local-stack/local-up.sh",
+    "local:stack": "tsx tools/local-stack/server.ts",
+    "local:staff": "tsx tools/local-stack/seed-staff.ts",
+    "tenant:schema": "tsx scripts/tenant/emit-json-schema.ts"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.6.3",
