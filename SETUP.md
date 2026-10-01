@@ -14,7 +14,7 @@ tenants/<slug>/business.json + images  ──tenant:publish──▶  Supabase (
 | Tool | Version | Why |
 |---|---|---|
 | Node.js | ≥ 22 | build, scripts (`process.loadEnvFile`) |
-| PostgreSQL | 16 or 17, with `btree_gist`, `pgcrypto` | local DB without Docker (or use `supabase start`) |
+| PostgreSQL | 16 or 17, with `btree_gist`, `pgcrypto` (contrib) | local DB without Docker (or use `supabase start`) |
 | Supabase CLI | ≥ 2.x | migrations, functions, secrets for the real project |
 | Chromium | any recent | Playwright E2E (`npx playwright install chromium` if missing) |
 
@@ -26,14 +26,35 @@ npm ci
 
 The repo ships a local emulator of the Supabase HTTP APIs (PostgREST RPC, Auth,
 Storage, Functions) on top of a real Postgres, so the full app runs offline.
+All setup scripts are Node/TypeScript — they work the same in Windows cmd,
+PowerShell, macOS and Linux (no bash, no `psql` needed).
+
+**Once per machine**
+
+1. Node.js **22+** (`node -v`).
+2. PostgreSQL **16** (Windows: the EDB installer from postgresql.org — keep the
+   defaults, port 5432, remember the password you set for user `postgres`; contrib
+   extensions are included). The service starts automatically.
+3. Tell the scripts the password (default is `postgres`):
+   - cmd: `set PGPASSWORD=your-password`
+   - PowerShell: `$env:PGPASSWORD="your-password"`
+   - bash: `export PGPASSWORD=your-password`
+
+   (Variables last for the current terminal window only.)
+
+**Run** (project root; three terminals for the last three steps, or use `local:start`)
 
 ```bash
-export PGPASSWORD=postgres            # password of the local postgres user
-npm run local:up                      # creates DB barbershop_dev: migrations + seed from tenants/*, writes .env.local
-npm run local:stack                   # emulator on http://localhost:54321 (keep running)
-npm run local:staff                   # demo staff accounts (password demo-password-123)
-npm run dev                           # http://localhost:5173/s/demo-studio/
+npm ci
+npm run local:up        # creates DB barbershop_dev (migrations + seed from tenants/*), writes .env.local
+npm run local:stack     # API emulator on http://localhost:54321 — keep this terminal open
+npm run local:staff     # demo staff accounts (once, after local:up; the stack must be running)
+npm run dev             # http://localhost:5173/s/demo-studio/
 ```
+
+`npm run local:start` / `npm run local:stop` run the emulator in the background
+instead of `local:stack` (log: `.local-stack/server.log`). `local:up` recreates the
+dev database from scratch — run `local:staff` again afterwards.
 
 Production-like (per-tenant shells, `_redirects`, service worker):
 
@@ -41,12 +62,22 @@ Production-like (per-tenant shells, `_redirects`, service worker):
 npm run build && npm run serve:dist   # http://localhost:4173/s/demo-studio/
 ```
 
-Demo accounts (local only): `owner@demo-studio.test` (owner), `admin@demo-studio.test`
-(admin), `alexey@demo-studio.test` (barber, sees only own bookings),
-`owner@demo-harbor.test` (owner of the second tenant).
+Demo accounts (local only, password `demo-password-123`): `owner@demo-studio.test`
+(owner), `admin@demo-studio.test` (admin), `alexey@demo-studio.test` (barber, sees
+only own bookings), `owner@demo-harbor.test` (owner of the second tenant).
 
 Alternative: `supabase start` (Docker) uses `supabase/config.toml`, the same
 migrations and `supabase/seed.sql`.
+
+**Troubleshooting**
+
+| Symptom | Fix |
+|---|---|
+| `EPERM … unlink …esbuild.exe` during `npm ci` | a process holds the file (running `npm run dev`, VS Code terminal, antivirus). Close them, rename `node_modules` to `node_modules_old`, run `npm ci` again |
+| `Cannot connect to PostgreSQL … ECONNREFUSED` | start the service (`services.msc` → postgresql-x64-16) |
+| `Cannot connect … 28P01` | wrong password → set `PGPASSWORD` (see above) |
+| `'export' is not recognized` | you are in cmd — use `set VAR=value` |
+| port 54321 / 5173 busy | `set LOCAL_STACK_PORT=54400` before `local:up`; Vite port is in `vite.config.ts` |
 
 ## 3. Tests
 
@@ -55,9 +86,10 @@ npm run typecheck                     # app + scripts (strict)
 npx tsc -p tsconfig.functions.json --noEmit   # Edge Functions
 npm run lint:tenants                  # no tenant names/values hard-coded in src/
 npm test                              # unit: time, web push crypto, AI router, pipeline
-npm run db:test                       # SQL suite (pgTAP-style) + concurrency suite, fresh DB
+npm run db:test                       # SQL suite + concurrency suite (needs bash and psql in PATH: Linux/macOS/WSL/Git Bash)
 npm run test:integration              # Edge Functions + pipeline against the local stack
-npm run e2e                           # Playwright (starts DB, emulator, build, static server itself)
+npx playwright install chromium      # once (not needed if PW_CHROMIUM_PATH is set)
+npm run e2e                           # Playwright (recreates DB, starts emulator, builds, serves dist itself; stop `local:stack` first — same port)
 ```
 
 ## 4. Real Supabase project

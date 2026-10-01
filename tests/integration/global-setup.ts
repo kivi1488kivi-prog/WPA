@@ -8,7 +8,7 @@ export const FAKE_LLM_PORT = 54999;
 /** Fresh local DB + seed, local stack with test env, demo staff. */
 export default async function setup() {
   const run = (cmd: string) => execSync(cmd, { cwd: ROOT, stdio: 'pipe', env: { ...process.env, PGPASSWORD: 'postgres' } }).toString();
-  run('tools/local-stack/local-up.sh');
+  run('npx tsx tools/local-stack/local-up.ts');
   const env = {
     ...process.env,
     LLM_BASE_URL: `http://localhost:${FAKE_LLM_PORT}/v1`,
@@ -17,7 +17,7 @@ export default async function setup() {
     CRON_SECRET: 'test-cron-secret',
     AI_GLOBAL_DAILY_REQUESTS: '10000',
   };
-  execSync('tools/local-stack/start-bg.sh', { cwd: ROOT, stdio: 'pipe', env });
+  execSync('npx tsx tools/local-stack/start-bg.ts', { cwd: ROOT, stdio: 'pipe', env });
   execSync('npx tsx tools/local-stack/seed-staff.ts', { cwd: ROOT, stdio: 'pipe', env: { ...env, ...parseEnv() } });
   return async () => {
     try {

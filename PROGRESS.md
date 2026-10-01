@@ -37,14 +37,14 @@
 6. Документы: SETUP.md, CLONE-IN-6-MINUTES.md, ACCEPTANCE.md, README.md.
 7. Полировка: перевод статуса tenant в настройках, оптимизация размера бандла (~370 KB gzip).
 
-## Как продолжить локально (Linux/macOS/WSL, нужен PostgreSQL 15+ с btree_gist/pgcrypto)
+## Как продолжить локально (Windows/macOS/Linux, Node 22, PostgreSQL 16; подробности в SETUP.md §2)
 ```bash
 npm ci
 npm run db:test                 # SQL + конкурентные тесты
 npm run local:up                # БД barbershop_dev + seed + .env.local
-tools/local-stack/start-bg.sh   # эмулятор API на :54321
+npm run local:start             # эмулятор API на :54321 (в фоне; или local:stack в отдельном окне)
 npm run local:staff             # demo-учётки: owner@demo-studio.test / demo-password-123
-npm run build && npx tsx tools/serve-dist.ts 4173   # http://localhost:4173/s/demo-studio/
+npm run build && npm run serve:dist   # http://localhost:4173/s/demo-studio/
 ```
 
 ## Состояние на 2026-10-01 (вечер)
@@ -53,3 +53,7 @@ npm run build && npx tsx tools/serve-dist.ts 4173   # http://localhost:4173/s/de
   SETUP.md, CLONE-IN-6-MINUTES.md, ACCEPTANCE.md, README.md; хэш конфига не зависит от базового URL медиа; перевод статуса тенанта.
 - Осталось (внешнее, см. ACCEPTANCE.md): реальный Supabase-проект, реальная LLM, push на устройствах, деплой Cloudflare, юр. проверка текстов.
 - Возможные улучшения: размер бандла (~370 KB gzip), свободные интервалы в календаре не обрезаются по «сейчас», e-mail/SMS уведомления.
+
+## 2026-10-01 (позже): кроссплатформенность
+- Скрипты local:up / db:reset / local:start|stop переписаны на Node/TS (node-postgres), bash и psql больше не нужны для запуска, e2e и integration. `.sh` остались тонкими обёртками. db:test всё ещё bash+psql (Git Bash/WSL).
+- server.ts сам читает .env.local; Playwright не требует Linux-пути Chromium (нужен `npx playwright install chromium`); engines node >=22.

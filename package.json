@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Multi-tenant PWA for barbershop online booking (React + Supabase)",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "astryx": "node node_modules/@astryxdesign/cli/clients/cli/bin/astryx.mjs",
@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.app.json && tsc -p tsconfig.node.json",
     "test": "vitest run",
-    "db:reset": "scripts/db/reset-local.sh",
+    "db:reset": "tsx scripts/db/reset-local.ts",
     "db:test": "scripts/db/test-sql.sh",
     "tenant:new": "tsx scripts/tenant/new.ts",
     "tenant:validate": "tsx scripts/tenant/validate.ts",
@@ -24,7 +24,7 @@
     "tenant:verify": "tsx scripts/tenant/verify.ts",
     "tenant:member": "tsx scripts/tenant/member.ts",
     "seed:build": "tsx scripts/tenant/build-seed.ts",
-    "local:up": "tools/local-stack/local-up.sh",
+    "local:up": "tsx tools/local-stack/local-up.ts",
     "local:stack": "tsx tools/local-stack/server.ts",
     "local:staff": "tsx tools/local-stack/seed-staff.ts",
     "tenant:schema": "tsx scripts/tenant/emit-json-schema.ts",
@@ -32,7 +32,9 @@
     "test:integration": "vitest run -c vitest.integration.config.ts",
     "e2e": "playwright test",
     "vapid:generate": "tsx scripts/ops/vapid-generate.ts",
-    "serve:dist": "tsx tools/serve-dist.ts"
+    "serve:dist": "tsx tools/serve-dist.ts",
+    "local:start": "tsx tools/local-stack/start-bg.ts",
+    "local:stop": "tsx tools/local-stack/start-bg.ts --stop"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.6.3",

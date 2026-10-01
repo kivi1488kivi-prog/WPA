@@ -6,7 +6,7 @@
 -- 15+/16 server. On a real Supabase project all of this already exists.
 -- Definitions mirror Supabase's own (auth.uid/auth.jwt read request.jwt.*).
 -- ---------------------------------------------------------------------------
-\set ON_ERROR_STOP on
+-- (ON_ERROR_STOP is passed by the runners; no psql meta-commands here so the file also runs through node-postgres)
 
 do $$
 begin

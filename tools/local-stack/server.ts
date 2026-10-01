@@ -22,7 +22,10 @@ import { randomBytes } from 'node:crypto';
 import { mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import pg from 'pg';
+import { loadEnv } from '../../scripts/tenant/env.ts';
 import { localKeys, signJwt, verifyJwt } from './jwt.ts';
+
+loadEnv(); // .env.local (written by local:up) — no shell sourcing needed, works on Windows
 
 const PORT = Number(process.env.LOCAL_STACK_PORT ?? 54321);
 const DATABASE_URL = process.env.LOCAL_DATABASE_URL ?? 'postgres://postgres:postgres@localhost:5432/barbershop_dev';

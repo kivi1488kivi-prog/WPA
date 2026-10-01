@@ -1,8 +1,11 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
 // E2E runs against: local Postgres (migrations + seed) + local-stack HTTP
 // emulator + the production build served with Cloudflare-equivalent rewrites.
-const chromium = process.env.PW_CHROMIUM_PATH ?? (process.env.CI ? undefined : '/opt/pw-browsers/chromium');
+// PW_CHROMIUM_PATH overrides; otherwise Playwright's own browser (`npx playwright install chromium`).
+const sandboxChromium = '/opt/pw-browsers/chromium';
+const chromium = process.env.PW_CHROMIUM_PATH ?? (existsSync(sandboxChromium) ? sandboxChromium : undefined);
 const launchOptions = chromium ? { executablePath: chromium } : {};
 
 export default defineConfig({

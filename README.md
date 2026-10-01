@@ -21,13 +21,16 @@ of shops under `/s/<slug>/`. German-first (DE/EN/RU), DSGVO features, Impressum.
 | [PROGRESS.md](PROGRESS.md) | development log |
 | [AGENTS.md](AGENTS.md) | conventions for coding agents |
 
-Quick start (local Postgres, no Supabase account):
+Quick start (Node 22 + local PostgreSQL 16, no Supabase account; Windows/macOS/Linux — details and
+troubleshooting in SETUP.md §2):
 
 ```bash
 npm ci
-export PGPASSWORD=postgres
-npm run local:up && npm run local:stack &   # DB + API emulator
-npm run local:staff && npm run dev           # → http://localhost:5173/s/demo-studio/
+# set PGPASSWORD to your postgres password first (cmd: set PGPASSWORD=...  bash: export PGPASSWORD=...)
+npm run local:up        # database + .env.local
+npm run local:stack     # API emulator (own terminal)
+npm run local:staff     # demo staff accounts
+npm run dev             # → http://localhost:5173/s/demo-studio/
 ```
 
 Stack: React 19, TypeScript (strict), Vite, React Router, TanStack Query, Zod,

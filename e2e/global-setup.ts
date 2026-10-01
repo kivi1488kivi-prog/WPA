@@ -6,8 +6,8 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 
 export default async function globalSetup() {
   const env = { ...process.env, PGPASSWORD: process.env.PGPASSWORD ?? 'postgres' };
-  execSync('tools/local-stack/local-up.sh', { cwd: ROOT, stdio: 'inherit', env });
-  execSync('tools/local-stack/start-bg.sh', { cwd: ROOT, stdio: 'inherit', env });
+  execSync('npx tsx tools/local-stack/local-up.ts', { cwd: ROOT, stdio: 'inherit', env });
+  execSync('npx tsx tools/local-stack/start-bg.ts', { cwd: ROOT, stdio: 'inherit', env });
   execSync('npx tsx tools/local-stack/seed-staff.ts', { cwd: ROOT, stdio: 'inherit', env: { ...env, ...loadEnvLocal() } });
 }
 
