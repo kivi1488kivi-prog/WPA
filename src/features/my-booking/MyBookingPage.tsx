@@ -396,6 +396,7 @@ function PushToggle({ token }: { token: string }) {
         p_token: token,
         p_subscription: sub,
         p_user_agent: navigator.userAgent,
+        p_slug: slug,
       });
       if (res.error) throw res.error;
     },

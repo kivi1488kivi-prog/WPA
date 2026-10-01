@@ -57,10 +57,10 @@ export const publicApi = {
       CreateBookingResultSchema,
     ),
 
-  booking: (slug: string, token: string) => rpc(slug, 'get_booking_by_token', { p_token: token }, PublicBookingSchema),
+  booking: (slug: string, token: string) => rpc(slug, 'get_booking_by_token', { p_token: token, p_slug: slug }, PublicBookingSchema),
 
   cancel: (slug: string, token: string, reason: string | null) =>
-    rpc(slug, 'cancel_booking_by_token', { p_token: token, p_reason: reason }, PublicBookingSchema),
+    rpc(slug, 'cancel_booking_by_token', { p_token: token, p_reason: reason, p_slug: slug }, PublicBookingSchema),
 
   reschedule: (slug: string, token: string, input: { startsAt: string; barberId: string | null; anyBarber: boolean; idempotencyKey: string }) =>
     rpc(
@@ -72,6 +72,7 @@ export const publicApi = {
         p_barber_id: input.barberId,
         p_any_barber: input.anyBarber,
         p_idempotency_key: input.idempotencyKey,
+        p_slug: slug,
       },
       PublicBookingSchema,
     ),

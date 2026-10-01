@@ -46,3 +46,11 @@ tools/local-stack/start-bg.sh   # эмулятор API на :54321
 npm run local:staff             # demo-учётки: owner@demo-studio.test / demo-password-123
 npm run build && npx tsx tools/serve-dist.ts 4173   # http://localhost:4173/s/demo-studio/
 ```
+
+## Состояние на 2026-10-01 (остановка по лимиту)
+- Готово и проверено: SQL (255 assertions + concurrency), unit 32, integration 9, typecheck, немецкий перевод, Impressum/Datenschutz/DSGVO, привязка токенов к slug.
+- Написано, но ещё НЕ запускалось: Playwright E2E — playwright.config.ts, e2e/global-setup.ts, e2e/global-teardown.ts, e2e/helpers.ts,
+  e2e/flow-booking-to-cabinet.spec.ts, e2e/flow-reschedule.spec.ts, e2e/isolation.spec.ts, e2e/mobile.spec.ts.
+- Следующий шаг: `source /root/.netenv; export PGPASSWORD=postgres; pkill -f serve-dist; npx playwright test --reporter=line` → чинить падения.
+- Потом: .env.example, скрипт генерации VAPID, supabase/sql/cron-setup.sql (pg_cron+pg_net → notify-worker),
+  SETUP.md, CLONE-IN-6-MINUTES.md, ACCEPTANCE.md, README.md; перевод статуса тенанта в настройках; размер бандла.

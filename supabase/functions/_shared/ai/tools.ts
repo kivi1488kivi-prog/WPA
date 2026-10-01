@@ -186,7 +186,7 @@ export const TOOLS: ToolDef[] = [
     args: z.object({}).strict(),
     run: async (_a, ctx) => {
       if (!ctx.bookingToken) return { error: 'no_booking_in_context' };
-      const b = (await call(ctx, 'get_booking_by_token', { p_token: ctx.bookingToken })) as Record<string, unknown>;
+      const b = (await call(ctx, 'get_booking_by_token', { p_token: ctx.bookingToken, p_slug: ctx.slug })) as Record<string, unknown>;
       return {
         status: b.status,
         date: b.local_date,
@@ -216,13 +216,14 @@ export const TOOLS: ToolDef[] = [
     run: async (a, ctx) => {
       if (!ctx.bookingToken) return { error: 'no_booking_in_context' };
       const startsAt = zonedToUtc(a.date, Number(a.time.slice(0, 2)) * 60 + Number(a.time.slice(3, 5)), ctx.timezone).toISOString();
-      const current = (await call(ctx, 'get_booking_by_token', { p_token: ctx.bookingToken })) as { barber: { id: string } };
+      const current = (await call(ctx, 'get_booking_by_token', { p_token: ctx.bookingToken, p_slug: ctx.slug })) as { barber: { id: string } };
       const b = (await call(ctx, 'reschedule_booking_by_token', {
         p_token: ctx.bookingToken,
         p_new_starts_at: startsAt,
         p_barber_id: a.keep_barber ? current.barber.id : null,
         p_any_barber: !a.keep_barber,
         p_idempotency_key: await uuidFrom(`${ctx.requestId}:${startsAt}:${a.keep_barber}`),
+        p_slug: ctx.slug,
       })) as Record<string, unknown>;
       return { rescheduled: true, date: b.local_date, time: b.local_time, barber: (b.barber as { name: string }).name };
     },

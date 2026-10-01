@@ -27,7 +27,10 @@
     "local:up": "tools/local-stack/local-up.sh",
     "local:stack": "tsx tools/local-stack/server.ts",
     "local:staff": "tsx tools/local-stack/seed-staff.ts",
-    "tenant:schema": "tsx scripts/tenant/emit-json-schema.ts"
+    "tenant:schema": "tsx scripts/tenant/emit-json-schema.ts",
+    "lint:tenants": "tsx scripts/check-no-tenant-names.ts",
+    "test:integration": "vitest run -c vitest.integration.config.ts",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.6.3",

@@ -216,8 +216,15 @@ async function storage(req: http.IncomingMessage, res: http.ServerResponse, url:
   if (obj && (req.method === 'POST' || req.method === 'PUT')) {
     const [, bucket, rawKey] = obj as unknown as [string, string, string];
     const key = decodeURIComponent(rawKey);
-    const data = await readBody(req);
-    const mimetype = String(req.headers['content-type'] ?? 'application/octet-stream').split(';')[0] ?? 'application/octet-stream';
+    let data = await readBody(req);
+    let mimetype = String(req.headers['content-type'] ?? 'application/octet-stream').split(';')[0] ?? 'application/octet-stream';
+    // supabase-js sends Blob/File bodies as multipart/form-data (like Storage API accepts)
+    if (mimetype === 'multipart/form-data') {
+      const part = parseMultipartFile(data, String(req.headers['content-type']));
+      if (!part) return send(res, 400, { statusCode: '400', error: 'invalid_multipart', message: 'no file part' });
+      data = part.data;
+      mimetype = part.type;
+    }
     const upsert = req.headers['x-upsert'] === 'true' || req.method === 'PUT';
     try {
       const bucketRow = await pool.query('select file_size_limit, allowed_mime_types from storage.buckets where id = $1', [bucket]);
@@ -260,6 +267,29 @@ async function storage(req: http.IncomingMessage, res: http.ServerResponse, url:
     }
   }
   send(res, 404, { message: 'storage route not emulated' });
+}
+
+function parseMultipartFile(body: Buffer, contentType: string): { data: Buffer; type: string } | null {
+  const boundary = /boundary=(?:"([^"]+)"|([^;]+))/i.exec(contentType);
+  const b = boundary?.[1] ?? boundary?.[2];
+  if (!b) return null;
+  const delim = Buffer.from(`--${b}`);
+  let pos = body.indexOf(delim);
+  while (pos !== -1) {
+    const next = body.indexOf(delim, pos + delim.length);
+    if (next === -1) break;
+    const part = body.subarray(pos + delim.length + 2, next - 2); // strip CRLFs
+    const sep = part.indexOf('\r\n\r\n');
+    if (sep !== -1) {
+      const head = part.subarray(0, sep).toString('utf8');
+      if (/filename=/i.test(head) || /content-type:/i.test(head)) {
+        const type = /content-type:\s*([^\r\n;]+)/i.exec(head)?.[1]?.trim() ?? 'application/octet-stream';
+        return { data: Buffer.from(part.subarray(sep + 4)), type };
+      }
+    }
+    pos = next;
+  }
+  return null;
 }
 
 // --- functions ---------------------------------------------------------------------

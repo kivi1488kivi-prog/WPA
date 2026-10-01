@@ -181,7 +181,7 @@ returns jsonb language sql stable security definer set search_path = '' as $$
   where b.id = p_booking_id
 $$;
 
-create or replace function private.booking_by_token(p_token text)
+create or replace function private.booking_by_token(p_token text, p_slug text default null)
 returns public.bookings language plpgsql stable security definer set search_path = '' as $$
 declare v public.bookings;
 begin
@@ -189,7 +189,9 @@ begin
     perform private.fail('booking_not_found');
   end if;
   select * into v from public.bookings b where b.token_hash = private.token_hash(p_token);
-  if v.id is null then
+  -- A token only opens its booking inside its own barbershop.
+  if v.id is null or (p_slug is not null and not exists (
+       select 1 from public.tenants t where t.id = v.tenant_id and t.slug = lower(btrim(p_slug)))) then
     perform private.fail('booking_not_found');
   end if;
   return v;
@@ -268,23 +270,23 @@ begin
                             'booking', private.booking_public_view(v_id));
 end $$;
 
-create or replace function public.get_booking_by_token(p_token text)
+create or replace function public.get_booking_by_token(p_token text, p_slug text default null)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v public.bookings;
 begin
   perform private.public_rate('token', 120, 60);
-  v := private.booking_by_token(p_token);
+  v := private.booking_by_token(p_token, p_slug);
   return private.booking_public_view(v.id);
 end $$;
 
-create or replace function public.cancel_booking_by_token(p_token text, p_reason text default null)
+create or replace function public.cancel_booking_by_token(p_token text, p_reason text default null, p_slug text default null)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare
   v public.bookings;
   v_policy jsonb;
 begin
   perform private.public_rate('token', 120, 60);
-  v := private.booking_by_token(p_token);
+  v := private.booking_by_token(p_token, p_slug);
   if v.status = 'cancelled' then
     return private.booking_public_view(v.id); -- idempotent retry
   end if;
@@ -298,7 +300,7 @@ end $$;
 
 create or replace function public.reschedule_booking_by_token(
   p_token text, p_new_starts_at timestamptz, p_barber_id uuid default null,
-  p_any_barber boolean default false, p_idempotency_key uuid default null)
+  p_any_barber boolean default false, p_idempotency_key uuid default null, p_slug text default null)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare
   v public.bookings;
@@ -314,7 +316,7 @@ begin
   if p_idempotency_key is null then
     perform private.fail('invalid_input', 'idempotency_key');
   end if;
-  v := private.booking_by_token(p_token);
+  v := private.booking_by_token(p_token, p_slug);
   select * into v_t from public.tenants where id = v.tenant_id;
   perform pg_advisory_xact_lock(hashtextextended(v.id::text || ':reschedule:' || p_idempotency_key::text, 0));
   v_hash := private.sha256_hex(jsonb_build_object('booking', v.id, 'start', p_new_starts_at,
@@ -353,12 +355,12 @@ begin
 end $$;
 
 -- Customer push subscription bound to one booking.
-create or replace function public.register_customer_push(p_token text, p_subscription jsonb, p_user_agent text default null)
+create or replace function public.register_customer_push(p_token text, p_subscription jsonb, p_user_agent text default null, p_slug text default null)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v public.bookings; v_id uuid;
 begin
   perform private.public_rate('token', 120, 60);
-  v := private.booking_by_token(p_token);
+  v := private.booking_by_token(p_token, p_slug);
   insert into public.push_subscriptions as ps (tenant_id, audience, booking_id, endpoint, p256dh, auth_secret, user_agent)
   values (v.tenant_id, 'customer', v.id, p_subscription ->> 'endpoint',
           p_subscription #>> '{keys,p256dh}', p_subscription #>> '{keys,auth}', left(p_user_agent, 300))

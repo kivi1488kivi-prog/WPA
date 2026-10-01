@@ -90,10 +90,10 @@ grant execute on function
   public.get_available_dates(text, uuid, uuid, date, int),
   public.get_barbers_on_date(text, date),
   public.create_booking(text, uuid, uuid, timestamptz, jsonb, uuid),
-  public.get_booking_by_token(text),
-  public.cancel_booking_by_token(text, text),
-  public.reschedule_booking_by_token(text, timestamptz, uuid, boolean, uuid),
-  public.register_customer_push(text, jsonb, text),
+  public.get_booking_by_token(text, text),
+  public.cancel_booking_by_token(text, text, text),
+  public.reschedule_booking_by_token(text, timestamptz, uuid, boolean, uuid, text),
+  public.register_customer_push(text, jsonb, text, text),
   public.unregister_customer_push(text, text)
 to anon, authenticated, service_role;
 

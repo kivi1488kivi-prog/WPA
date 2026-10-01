@@ -29,6 +29,11 @@ select tests.throws($$select private.booking_token(gen_random_uuid(), gen_random
 select tests.ok((public.get_tenant_public('test-a')::text not like '%Ivan%'), 'public payload contains no customer data');
 select tests.ok((public.get_available_slots('test-a', :'cut', null, :'monday')::text not like '%Ivan%'), 'slots contain no customer data');
 
+-- booking tokens are bound to their barbershop
+select tests.eq(public.get_booking_by_token(:'ra'::jsonb ->> 'token', 'test-a') ->> 'id', :'bk_anna', 'token opens its booking under its own slug');
+select tests.throws(format($$select public.get_booking_by_token(%L, 'test-b')$$, :'ra'::jsonb ->> 'token'), 'booking_not_found', 'token of shop A does not open under shop B');
+select tests.throws(format($$select public.cancel_booking_by_token(%L, null, 'test-b')$$, :'ra'::jsonb ->> 'token'), 'booking_not_found', 'token of shop A cannot cancel via shop B');
+
 -- authenticated without membership ----------------------------------------------------
 reset role;
 select set_config('request.jwt.claims', '{"role":"authenticated","sub":"00000000-0000-0000-0000-00000000dead"}', true);
