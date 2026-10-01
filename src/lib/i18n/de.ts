@@ -417,4 +417,7 @@ export const de: Dict = {
   'settings.supervisory': 'Zuständige Datenschutz-Aufsichtsbehörde',
   'settings.language': 'Sprache',
   'settings.problem.missing_impressum': 'Impressum vervollständigen (Name, Anschrift, E-Mail)',
+  'stats.tableView': 'Als Tabelle anzeigen',
+  'clients.visitsLabel': 'Besuche',
+  'settings.saveSection': 'Speichern',
 };

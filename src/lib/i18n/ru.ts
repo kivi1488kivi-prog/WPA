@@ -417,4 +417,7 @@ export const ru: Dict = {
   'settings.supervisory': 'Надзорный орган по защите данных',
   'settings.language': 'Язык',
   'settings.problem.missing_impressum': 'заполните Impressum (имя, адрес, email)',
+  'stats.tableView': 'Показать таблицей',
+  'clients.visitsLabel': 'Визиты',
+  'settings.saveSection': 'Сохранить',
 };

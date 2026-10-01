@@ -415,6 +415,9 @@ export const en = {
   'settings.supervisory': 'Data protection supervisory authority',
   'settings.language': 'Language',
   'settings.problem.missing_impressum': 'complete the legal notice (name, address, email)',
+  'stats.tableView': 'Show as table',
+  'clients.visitsLabel': 'Visits',
+  'settings.saveSection': 'Save',
 } as const;
 
 export type MessageKey = keyof typeof en;

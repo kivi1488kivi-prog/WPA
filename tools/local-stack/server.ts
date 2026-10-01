@@ -297,7 +297,10 @@ async function functions(req: http.IncomingMessage, res: http.ServerResponse, ur
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://localhost:${PORT}`);
   try {
-    if (req.method === 'OPTIONS') return send(res, 204, undefined);
+    if (req.method === 'OPTIONS') {
+      const requested = req.headers['access-control-request-headers'];
+      return send(res, 204, undefined, requested ? { 'access-control-allow-headers': String(requested) } : {});
+    }
     if (url.pathname === '/health') return send(res, 200, { ok: true });
     if (url.pathname.startsWith('/rest/v1/rpc/') && req.method === 'POST') return await rpc(req, res, url.pathname.slice('/rest/v1/rpc/'.length));
     if (url.pathname.startsWith('/auth/v1/')) return await auth(req, res, url);

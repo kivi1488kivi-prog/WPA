@@ -8,6 +8,13 @@ import { I18nProvider, makeT } from '@/lib/i18n';
 import { registerServiceWorker } from '@/lib/push';
 import { TenantContext, intlLocale, type TenantCtx } from './tenant';
 import { TenantTheme } from './TenantTheme';
+import { InternationalizationProvider } from '@astryxdesign/core/i18n';
+
+// Astryx component catalogs are ~100 KB each: load only the tenant's locale (own chunk).
+const ASTRYX_CATALOGS: Record<string, () => Promise<{ default: Record<string, unknown> }>> = {
+  'de-DE': () => import('@astryxdesign/core/locales/de-DE.json'),
+  'ru-RU': () => import('@astryxdesign/core/locales/ru-RU.json'),
+};
 import { ErrorState, FullscreenSpinner } from '@/components/States';
 import { NotFoundPage } from './StaticPages';
 
@@ -26,6 +33,16 @@ export function TenantRoot() {
   });
 
   const shop = shopQuery.data;
+  const intl = shop ? intlLocale(shop.tenant.locale) : null;
+  const catalog = useQuery({
+    queryKey: ['astryx-locale', intl],
+    queryFn: async () => {
+      const load = intl ? ASTRYX_CATALOGS[intl] : undefined;
+      return load ? { [intl as string]: (await load()).default } : {};
+    },
+    enabled: intl !== null,
+    staleTime: Infinity,
+  });
   const ctx = useMemo<TenantCtx | null>(
     () =>
       shop
@@ -56,7 +73,7 @@ export function TenantRoot() {
     );
   }
 
-  if (shopQuery.isPending) {
+  if (shopQuery.isPending || (shop && catalog.isPending)) {
     return (
       <TenantTheme slug="boot" accent="#C8A165">
         <FullscreenSpinner />
@@ -79,9 +96,12 @@ export function TenantRoot() {
   return (
     <TenantTheme slug={slug} accent={shop.tenant.accent_color}>
       <I18nProvider locale={shop.tenant.locale}>
-        <TenantContext.Provider value={ctx}>
-          <Outlet />
-        </TenantContext.Provider>
+        {/* Astryx' own component strings (Required, Optional, date formats…) */}
+        <InternationalizationProvider locale={ctx.intl} messages={(catalog.data ?? {}) as never}>
+          <TenantContext.Provider value={ctx}>
+            <Outlet />
+          </TenantContext.Provider>
+        </InternationalizationProvider>
       </I18nProvider>
     </TenantTheme>
   );
