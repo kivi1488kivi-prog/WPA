@@ -1,0 +1,38 @@
+# Supabase CLI project configuration (local dev with `supabase start` / deploy).
+project_id = "barbershop-booking"
+
+[api]
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:4173"]
+# No public sign-up: staff accounts are created by `npm run tenant:member`.
+enable_signup = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = false
+
+[storage]
+file_size_limit = "5MiB"
+
+# Both functions authenticate themselves (anon/user JWT via the DB, or CRON_SECRET),
+# so the gateway JWT check is disabled (also required for new publishable keys).
+[functions.ai-chat]
+verify_jwt = false
+import_map = "./functions/deno.json"
+
+[functions.notify-worker]
+verify_jwt = false
+import_map = "./functions/deno.json"

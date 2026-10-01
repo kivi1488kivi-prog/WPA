@@ -12,7 +12,7 @@ import { SideNav, SideNavItem, SideNavSection } from '@astryxdesign/core/SideNav
 import { Text } from '@astryxdesign/core/Text';
 import { TopNav, TopNavHeading } from '@astryxdesign/core/TopNav';
 import { VStack } from '@astryxdesign/core/VStack';
-import { BarChart3, CalendarDays, CalendarOff, ExternalLink, Image, LogOut, Scissors, Settings, ShieldX, UserRound, Users } from 'lucide-react';
+import { BarChart3, Bot, CalendarDays, CalendarOff, ExternalLink, Image, LogOut, Scissors, Settings, ShieldX, UserRound, Users } from 'lucide-react';
 import { useTenant } from '@/app/tenant';
 import { useI18n } from '@/lib/i18n';
 import { getSupabase } from '@/lib/supabase';
@@ -31,6 +31,7 @@ import { StatsPage } from './stats/StatsPage';
 import { PhotosPage } from './photos/PhotosPage';
 import { SettingsPage } from './settings/SettingsPage';
 import { StaffPushToggle } from './StaffPushToggle';
+import { OwnerAssistant } from './OwnerAssistant';
 
 function useSession(slug: string) {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
@@ -128,6 +129,7 @@ export default function OwnerApp() {
                 {item('/clients', t('owner.nav.clients'), Users)}
                 {item('/schedule', t('owner.nav.schedule'), CalendarOff)}
                 {item('/stats', t('owner.nav.stats'), BarChart3)}
+                {item('/assistant', t('ai.title'), Bot, shop.tenant.ai_enabled)}
               </SideNavSection>
               {can(role, 'manage') ? (
                 <SideNavSection title={t('settings.general')}>
@@ -151,6 +153,7 @@ export default function OwnerApp() {
               <Route path="clients/:customerId" element={<ClientsPage />} />
               <Route path="schedule" element={<SchedulePage />} />
               <Route path="stats" element={<StatsPage />} />
+              <Route path="assistant" element={<OwnerAssistant />} />
               {can(role, 'manage') ? (
                 <>
                   <Route path="barbers" element={<BarbersPage />} />
