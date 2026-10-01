@@ -47,10 +47,9 @@ npm run local:staff             # demo-учётки: owner@demo-studio.test / de
 npm run build && npx tsx tools/serve-dist.ts 4173   # http://localhost:4173/s/demo-studio/
 ```
 
-## Состояние на 2026-10-01 (остановка по лимиту)
-- Готово и проверено: SQL (255 assertions + concurrency), unit 32, integration 9, typecheck, немецкий перевод, Impressum/Datenschutz/DSGVO, привязка токенов к slug.
-- Написано, но ещё НЕ запускалось: Playwright E2E — playwright.config.ts, e2e/global-setup.ts, e2e/global-teardown.ts, e2e/helpers.ts,
-  e2e/flow-booking-to-cabinet.spec.ts, e2e/flow-reschedule.spec.ts, e2e/isolation.spec.ts, e2e/mobile.spec.ts.
-- Следующий шаг: `source /root/.netenv; export PGPASSWORD=postgres; pkill -f serve-dist; npx playwright test --reporter=line` → чинить падения.
-- Потом: .env.example, скрипт генерации VAPID, supabase/sql/cron-setup.sql (pg_cron+pg_net → notify-worker),
-  SETUP.md, CLONE-IN-6-MINUTES.md, ACCEPTANCE.md, README.md; перевод статуса тенанта в настройках; размер бандла.
+## Состояние на 2026-10-01 (вечер)
+- Всё зелёное: typecheck (app+functions), lint:tenants, unit 32, SQL 255 + concurrency 6, integration 9, E2E Playwright 5/5, tenant validate/publish/verify для обоих демо.
+- Добавлено: E2E (e2e/*.spec.ts), .env.example, `npm run vapid:generate`, supabase/sql/cron-setup.sql, `npm run serve:dist`,
+  SETUP.md, CLONE-IN-6-MINUTES.md, ACCEPTANCE.md, README.md; хэш конфига не зависит от базового URL медиа; перевод статуса тенанта.
+- Осталось (внешнее, см. ACCEPTANCE.md): реальный Supabase-проект, реальная LLM, push на устройствах, деплой Cloudflare, юр. проверка текстов.
+- Возможные улучшения: размер бандла (~370 KB gzip), свободные интервалы в календаре не обрезаются по «сейчас», e-mail/SMS уведомления.

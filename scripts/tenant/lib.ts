@@ -249,7 +249,12 @@ export function normalize(biz: Business, media: MediaPaths) {
       intervals: sd.hours.map(parseRange),
     })),
   };
-  const config_hash = createHash('sha256').update(JSON.stringify(config)).digest('hex').slice(0, 16);
+  // Media files are content-addressed; hash only their file names so a seeded
+  // DB (static /s/<slug>/media/ URLs) and a published one (Storage URLs) of the
+  // same business.json get the same hash.
+  const stable = JSON.stringify(config, (k, v: unknown) =>
+    typeof v === 'string' && (k === 'path' || k.endsWith('_path')) ? v.slice(v.lastIndexOf('/') + 1) : v);
+  const config_hash = createHash('sha256').update(stable).digest('hex').slice(0, 16);
   return { ...config, config_hash };
 }
 

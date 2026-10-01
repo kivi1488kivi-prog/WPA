@@ -109,7 +109,7 @@ export function SettingsPage() {
 
   return (
     <VStack gap={0}>
-      <PageHeader title={t('owner.nav.settings')} subtitle={t('settings.status', { status: tn.status })} />
+      <PageHeader title={t('owner.nav.settings')} subtitle={t('settings.status', { status: t(`settings.statusValue.${tn.status}` as const) })} />
       {error ? <Banner status="error" title={error} container="section" /> : null}
       {!isOwner ? <Banner status="info" title={t('settings.ownerOnly')} container="section" /> : null}
 

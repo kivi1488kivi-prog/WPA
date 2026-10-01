@@ -30,7 +30,9 @@
     "tenant:schema": "tsx scripts/tenant/emit-json-schema.ts",
     "lint:tenants": "tsx scripts/check-no-tenant-names.ts",
     "test:integration": "vitest run -c vitest.integration.config.ts",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "vapid:generate": "tsx scripts/ops/vapid-generate.ts",
+    "serve:dist": "tsx tools/serve-dist.ts"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.6.3",
