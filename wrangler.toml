@@ -1,0 +1,8 @@
+name = "barbershoptestweb"
+compatibility_date = "2024-11-01"
+
+[build]
+command = "npm run build"
+
+[env.production]
+name = "barbershoptestweb-prod"

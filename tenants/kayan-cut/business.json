@@ -1,0 +1,270 @@
+{
+  "$schema": "../_schema/business.schema.json",
+  "slug": "kayan-cut",
+  "name": "KAYAN CUT",
+  "short_name": "KAYAN CUT",
+  "tagline": "Klassische Herrenfrisuren · Premium Bartpflege",
+  "description": "Professionelles Barbershop mit modernem Standard. Wir bieten klassische Herrenfrisuren, Bartpflege und exklusive Gesichtsbehandlungen.",
+  "locale": "de",
+  "timezone": "Europe/Berlin",
+  "currency": "EUR",
+  "is_demo": true,
+  "brand": {
+    "accent_color": "#B8860B",
+    "background_color": "#1a1a1a",
+    "logo": "images/logo.png",
+    "icon": "images/icon.png",
+    "maskable_icon": "images/icon-maskable.png",
+    "cover": "images/cover.jpg"
+  },
+  "contact": {
+    "phone": "+49 30 12345678",
+    "email": "info@kayan-cut.de"
+  },
+  "location": {
+    "address_line": "Beispielstraße 123",
+    "city": "Berlin",
+    "postal_code": "10115",
+    "country": "DE"
+  },
+  "opening_hours": {
+    "mon": [
+      "09:00-19:00"
+    ],
+    "tue": [
+      "09:00-19:00"
+    ],
+    "wed": [
+      "09:00-19:00"
+    ],
+    "thu": [
+      "09:00-19:00"
+    ],
+    "fri": [
+      "09:00-19:00"
+    ],
+    "sat": [
+      "09:00-18:00"
+    ],
+    "sun": []
+  },
+  "rules": {
+    "slot_step_min": 30,
+    "min_lead_min": 60,
+    "max_advance_days": 60,
+    "cancellation": {
+      "allowed": true,
+      "min_notice_hours": 24
+    },
+    "reschedule": {
+      "allowed": true,
+      "min_notice_hours": 24,
+      "max_per_booking": 3
+    }
+  },
+  "notifications": {
+    "reminders_before_min": [180, 1440],
+    "notify_staff": true
+  },
+  "ai": {
+    "enabled": false,
+    "daily_request_limit": 100,
+    "daily_token_limit": 50000
+  },
+  "services": [
+    {
+      "key": "haircut",
+      "name": "Herrenhaarschnitt inkl. waschen",
+      "description": "Professioneller Haarschnitt mit Haarwäsche und Styling",
+      "duration_min": 30,
+      "price": 18
+    },
+    {
+      "key": "haircut-machine",
+      "name": "Herrenhaarschnitt (nur mit der Maschine)",
+      "description": "Schneller Haarschnitt mit der Maschine",
+      "duration_min": 20,
+      "price": 10
+    },
+    {
+      "key": "sides-zero",
+      "name": "Seiten auf Null",
+      "description": "Kurze Seiten - Fade oder Skin Fade",
+      "duration_min": 25,
+      "price": 15
+    },
+    {
+      "key": "beard-trim",
+      "name": "Bartrasur",
+      "description": "Professionelle Bartrasur mit Aftershave",
+      "duration_min": 20,
+      "price": 10
+    },
+    {
+      "key": "haircut-beard",
+      "name": "Herrenhaarschnitt + Bartrasur",
+      "description": "Komplettes Paket: Haarschnitt mit Bartrasur",
+      "duration_min": 50,
+      "price": 25
+    },
+    {
+      "key": "kids-cut",
+      "name": "Kinderhaarschnitt (bis 6 Jahre)",
+      "description": "Haarschnitt für Kinder bis 6 Jahren",
+      "duration_min": 20,
+      "price": 10
+    },
+    {
+      "key": "kids-cut-teen",
+      "name": "Kinderhaarschnitt (7-14 Jahre)",
+      "description": "Haarschnitt für Kinder und Jugendliche 7-14 Jahren",
+      "duration_min": 25,
+      "price": 15
+    },
+    {
+      "key": "facial-wax",
+      "name": "Gesichtsreinigung mit Wachs",
+      "description": "Professionelle Gesichtsreinigung mit Wachstechnik",
+      "duration_min": 20,
+      "price": 5
+    },
+    {
+      "key": "ear-nose-wax",
+      "name": "Ohren- & Nasenhaarentfernung mit Wachs",
+      "description": "Sanfte Entfernung von Ohren- und Nasenhaar",
+      "duration_min": 15,
+      "price": 5
+    },
+    {
+      "key": "facial-threading",
+      "name": "Gesichtsreinigung mit Faden",
+      "description": "Traditionelle Fadenepilation für präzise Ergebnisse",
+      "duration_min": 20,
+      "price": 5
+    },
+    {
+      "key": "eyebrow-threading",
+      "name": "Augenbrauenkorrektur mit Faden",
+      "description": "Perfekte Augenbrauenform mit Fadentechnik",
+      "duration_min": 15,
+      "price": 5
+    },
+    {
+      "key": "facial-steam",
+      "name": "Gesichtsreinigung mit Dampfbad",
+      "description": "Entspannende Gesichtsbehandlung mit Dampf und Peeling",
+      "duration_min": 30,
+      "price": 25
+    },
+    {
+      "key": "vip-package",
+      "name": "VIP Paket",
+      "description": "Haarschnitt + Bart + Wäsche + Augenbrauen + Styling",
+      "duration_min": 75,
+      "price": 40
+    }
+  ],
+  "barbers": [
+    {
+      "key": "ahmed",
+      "name": "Ahmed",
+      "title": "Barbershop Meister",
+      "bio": "Über 15 Jahre Erfahrung in klassischen und modernen Frisuren. Spezialist für Fade und Bartstyling.",
+      "photo": "images/barbers/ahmed.jpg",
+      "specialties": [
+        "Fade Schnitte",
+        "Bartpflege",
+        "Styling"
+      ],
+      "color": "#DAA520",
+      "marker": "AH",
+      "services": [
+        "haircut",
+        "haircut-machine",
+        "sides-zero",
+        "beard-trim",
+        "haircut-beard",
+        "kids-cut",
+        "kids-cut-teen",
+        "facial-wax",
+        "ear-nose-wax",
+        "eyebrow-threading",
+        "vip-package"
+      ],
+      "schedule": {
+        "mon": ["09:00-19:00"],
+        "tue": ["09:00-19:00"],
+        "wed": ["09:00-19:00"],
+        "thu": ["09:00-19:00"],
+        "fri": ["09:00-19:00"],
+        "sat": ["09:00-18:00"]
+      },
+      "breaks": {
+        "mon": ["13:00-13:30"],
+        "tue": ["13:00-13:30"],
+        "wed": ["13:00-13:30"],
+        "thu": ["13:00-13:30"],
+        "fri": ["13:00-13:30"],
+        "sat": ["13:00-13:30"]
+      }
+    },
+    {
+      "key": "karim",
+      "name": "Karim",
+      "title": "Senior Barber",
+      "bio": "Spezialist für orientalische Bartformen und Gesichtsbehandlungen. Traditionelle Techniken mit modernem Touch.",
+      "photo": "images/barbers/karim.jpg",
+      "specialties": [
+        "Bartwork",
+        "Gesichtsbehandlungen",
+        "Threading"
+      ],
+      "color": "#B8860B",
+      "marker": "KA",
+      "services": [
+        "haircut",
+        "beard-trim",
+        "facial-wax",
+        "ear-nose-wax",
+        "facial-threading",
+        "eyebrow-threading",
+        "facial-steam",
+        "vip-package"
+      ],
+      "schedule": {
+        "mon": ["09:00-19:00"],
+        "tue": ["09:00-19:00"],
+        "wed": ["09:00-19:00"],
+        "thu": ["09:00-19:00"],
+        "fri": ["09:00-19:00"],
+        "sat": ["09:00-18:00"]
+      },
+      "breaks": {
+        "mon": ["13:00-13:30"],
+        "tue": ["13:00-13:30"],
+        "wed": ["13:00-13:30"],
+        "thu": ["13:00-13:30"],
+        "fri": ["13:00-13:30"],
+        "sat": ["13:00-13:30"]
+      }
+    }
+  ],
+  "legal": {
+    "impressum": {
+      "legal_name": "KAYAN CUT GmbH",
+      "represented_by": "Geschäftsführer",
+      "street": "Beispielstraße 123",
+      "postal_code": "10115",
+      "city": "Berlin",
+      "country": "Deutschland",
+      "email": "info@kayan-cut.de",
+      "phone": "+49 30 12345678",
+      "dispute_resolution": "not_willing"
+    },
+    "privacy": {
+      "retention_months": 24,
+      "hosting": "Supabase (EU, Frankfurt) · Cloudflare Pages",
+      "extra_processors": []
+    }
+  }
+}
